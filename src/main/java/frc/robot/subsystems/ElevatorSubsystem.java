@@ -35,6 +35,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     
     //Inverto o motor da esquerda para que girem juntos
     motorLeft.setInverted(true);
+    motorRight.setInverted(false);
 
     //Associo os encoders, seto a razão de 1 volta e zero os mesmos
     leftEncoder = motorLeft.getEncoder();

@@ -17,8 +17,6 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.Auto5Heading;
-import frc.robot.commands.Claw.InsideClaw;
-import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Elevator.DownElevator;
 import frc.robot.commands.Elevator.UpElevator;
 import frc.robot.commands.Intake.IntakeSensor;
@@ -26,9 +24,8 @@ import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 
-import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -37,8 +34,8 @@ public class RobotContainer
     private final SwerveSubsystem drivebase;
     private final IntakeSubsystem intake  = IntakeSubsystem.getInstance();
     private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-    private final ClawSubsystem claw = ClawSubsystem.getInstance();
-    private final PhotonVision photonVision = new PhotonVision();
+    //private final PhotonVision photonVision = new PhotonVision();
+    private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
     
     // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
     CommandXboxController driverXbox = new CommandXboxController(0);
@@ -102,20 +99,22 @@ public class RobotContainer
         .onFalse(new InstantCommand(()->intake.setMotorPower(0),intake));
 
         driverXboxOperator.povUp()
-        .onTrue(new UpElevator());
-        
+        //.onTrue(new UpElevator());
+        .onTrue(new InstantCommand(()-> elevator.setMotorPower(1)))
+        .onFalse(new InstantCommand(()-> elevator.setMotorPower(0)));
         driverXboxOperator.povDown()
-        .onTrue(new DownElevator());
+        //.onTrue(new DownElevator());
+        .onTrue(new InstantCommand(()-> elevator.setMotorPower(-1)))
+        .onFalse(new InstantCommand(()-> elevator.setMotorPower(0)));
 
-
-        driverXboxOperator.povRight()
+        /*driverXboxOperator.povRight()
         .onTrue(new InsideClaw())
         .onFalse(new InstantCommand(()->claw.setMotorPower(0),claw));
         
         driverXboxOperator.povLeft()
         .onTrue(new OutsideClaw())
         .onFalse(new InstantCommand(()->claw.setMotorPower(0),claw));
-
+*/
         
         twoBumper
         .onTrue(new InstantCommand(()->xbox.setRumble(RumbleType.kBothRumble, 1)))
@@ -136,7 +135,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() {
 
-    return new Auto5Heading(drivebase);
+    return null;
   }
 
 

@@ -61,7 +61,7 @@ public final class Constants
             public static final int kShooterDownMotor = 13;
             public static final int kShooterUpMotor = 15;
             public static final double kPowerDown = 1;
-            public static final double kPower = 1;
+            public static final double kPower = 0.75;
             public static final double kReversePowerDown = -0.3;
             public static final double kReversePower = -0.3;
             public static final double kWaitBeforeShoot = 1.0;
