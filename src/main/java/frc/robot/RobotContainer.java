@@ -28,6 +28,7 @@ import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -37,7 +38,7 @@ public class RobotContainer
     private final IntakeSubsystem intake  = IntakeSubsystem.getInstance();
     private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
     private final ClawSubsystem claw = ClawSubsystem.getInstance();
-    //private final PhotonVision photonVision = new PhotonVision();
+    private final PhotonVision photonVision = new PhotonVision();
     
     // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
     CommandXboxController driverXbox = new CommandXboxController(0);
