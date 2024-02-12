@@ -1,6 +1,7 @@
 
 package frc.robot.commands.swervedrive.auto;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +38,7 @@ public class MoveXYHeading extends Command {
 
   @Override
   public void initialize() {
-    swerve.resetOdometry();
+    swerve.resetOdometry(new Pose2d());
     swerve.zeroGyro();
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorX = 0;
@@ -63,7 +64,7 @@ public class MoveXYHeading extends Command {
     {
       finish = false;
     }
-    if(Math.abs(swerve.getYaw().getDegrees())<Math.abs(heading))
+    if(Math.abs(swerve.getPose().getRotation().getDegrees())<Math.abs(heading))
     {
       finish = false;
     }
@@ -77,7 +78,7 @@ public class MoveXYHeading extends Command {
     double errorY = distanceY - sensorY;
     speedY = Auton.kp*errorY;
 
-    double sensorH = swerve.getYaw().getDegrees();
+    double sensorH = swerve.getPose().getRotation().getDegrees();
     double errorH = heading - sensorH;
     speedH = Auton.kpH*errorH;
 
@@ -106,7 +107,7 @@ public class MoveXYHeading extends Command {
     
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
                  angVelocity,
-                 true ,false);
+                 true );
     
   }
 
