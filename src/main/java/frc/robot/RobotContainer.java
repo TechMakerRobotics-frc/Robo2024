@@ -18,6 +18,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.Auto5Heading;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
+import frc.robot.commands.Claw.StopClaw;
 import frc.robot.commands.Elevator.DownElevator;
 import frc.robot.commands.Elevator.UpElevator;
 import frc.robot.commands.Intake.IntakeSensor;
@@ -26,6 +27,7 @@ import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -34,7 +36,7 @@ public class RobotContainer {
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
   private final ClawSubsystem claw = ClawSubsystem.getInstance();
-  // private final PhotonVision photonVision = new PhotonVision();
+  private final PhotonVision photonVision = new PhotonVision();
   private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
   // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
@@ -42,15 +44,14 @@ public class RobotContainer {
   CommandXboxController driverXboxOperator = new CommandXboxController(1);
   XboxController xbox = new XboxController(0);
   Trigger twoBumper = new Trigger(() -> (driverXbox.getRawAxis(2) > 0.85 && driverXbox.getRawAxis(3) > 0.85));
-  Command driveFieldOrientedDirectAngle;
+  Command driveFieldOrientedAnglularVelocity;
 
   public RobotContainer() {
     drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-    driveFieldOrientedDirectAngle = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRightX(),
-        () -> driverXbox.getRightY());
+     driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
+      () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+      () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+      () -> driverXbox.getRawAxis(2));
 
   }
 
@@ -107,17 +108,17 @@ public class RobotContainer {
 
     driverXboxOperator.povRight()
         .onTrue(new InsideClaw())
-        .onFalse(new InstantCommand(() -> claw.setMotorPower(0), claw));
+        .onFalse(new StopClaw());
 
     driverXboxOperator.povLeft()
         .onTrue(new OutsideClaw())
-        .onFalse(new InstantCommand(() -> claw.setMotorPower(0), claw));
+        .onFalse(new StopClaw());
 
     twoBumper
         .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
         .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
 
-    drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
   }
 
@@ -128,7 +129,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return null;
+    return drivebase.getAutonomousCommand("3 notes blue");
   }
 
   public void setDriveMode() {
