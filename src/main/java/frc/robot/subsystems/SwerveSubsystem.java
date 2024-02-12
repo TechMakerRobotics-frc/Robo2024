@@ -38,6 +38,7 @@ paths with events.
             throw new RuntimeException(e);
         }
         SmartDashboard.putString("Swerve", "Iniciado");
+        
         instance = this;
         
     }
