@@ -20,7 +20,7 @@ import org.opencv.imgproc.Imgproc;
  * from the USB camera, then a rectangle is put on the image and sent to the dashboard. OpenCV has
  * many methods for different types of processing.
  */
-public class AutoLimelight extends TimedRobot {
+public class LimelightSubsystem extends TimedRobot {
   Thread m_visionThread;
 
   @Override

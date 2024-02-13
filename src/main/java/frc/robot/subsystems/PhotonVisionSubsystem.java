@@ -13,7 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PhotonVision extends SubsystemBase {
+public class PhotonVisionSubsystem extends SubsystemBase {
     private NetworkTableInstance instance = NetworkTableInstance.getDefault();
     private NetworkTable table = instance.getTable("photonvision");
 

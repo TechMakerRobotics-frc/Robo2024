@@ -27,7 +27,7 @@ import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PhotonVision;
+import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -36,7 +36,7 @@ public class RobotContainer {
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
   private final ClawSubsystem claw = ClawSubsystem.getInstance();
-  private final PhotonVision photonVision = new PhotonVision();
+  private final PhotonVisionSubsystem photonVision = new PhotonVisionSubsystem();
   private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
   // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
@@ -51,25 +51,9 @@ public class RobotContainer {
      driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
       () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
       () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-      () -> (driverXbox.getRawAxis(2)-driverXbox.getRawAxis(3)));
+      () -> (driverXbox.getRawAxis(3)-driverXbox.getRawAxis(2)));
 
   }
-
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * //* CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-
   // Configura os botões do Xbox.
   void configureBindings() {
 
