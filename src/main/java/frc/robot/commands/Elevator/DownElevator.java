@@ -18,7 +18,7 @@ public class DownElevator extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(!elevator.getEndOfCourse()){
+    if(!elevator.getLimiSwitch()){
       elevator.setMotorPower(ElevatorConstants.kPowerDown);
     }
   }
@@ -36,6 +36,6 @@ public class DownElevator extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.getEndOfCourse();
+    return elevator.getLimiSwitch();
   }
 }

@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   //dois encoders, um de cada motor
   RelativeEncoder leftEncoder;
   RelativeEncoder rightEncoder;
-  DigitalInput endOfCourse = new DigitalInput(1);
+  DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
   /** Creates a new arm. */
   public ElevatorSubsystem() {
     
@@ -67,13 +67,18 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double getEncoder(){
     return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));
   }
-  public boolean getEndOfCourse(){
-    return endOfCourse.get();
+  public boolean getLimiSwitch(){
+    return limiSwitch.get();
   }
   
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder", getEncoder());
+
+    SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
+    if(getLimiSwitch()){
+      resetEncoder();
+    }    
    
   }
 

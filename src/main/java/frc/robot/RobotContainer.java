@@ -32,7 +32,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
-  private final SwerveSubsystem drivebase;
+  private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
   private final ClawSubsystem claw = ClawSubsystem.getInstance();
@@ -47,7 +47,7 @@ public class RobotContainer {
   Command driveFieldOrientedAnglularVelocity;
 
   public RobotContainer() {
-    drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+   
      driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
       () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
       () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
@@ -63,13 +63,15 @@ public class RobotContainer {
     // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
     driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
 
+    driverXbox.x().onTrue(drivebase.aimAtTarget(photonVision.getCamera()));
+
     // Controle do operador:
 
     driverXboxOperator.x()
         .onTrue(new StartShooter())
         .onFalse(new StopShooter());
 
-    driverXboxOperator.y().onTrue(new IntakeSensor());
+    driverXboxOperator.y().onTrue(new IntakeSensor());   // Falts conectar o sensor na RoboRio
 
     driverXboxOperator.a()
         .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))

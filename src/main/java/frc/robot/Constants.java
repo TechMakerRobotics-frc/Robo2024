@@ -20,13 +20,13 @@ public final class Constants {
         public static final double ki = 0.36;
         public static final double kd = 0;
 
-        // P = 0.46 - I = 0.17 - D = 0.01
+        // P = 0.76 - I = 0.36 - D = 0
 
         public static final double kpH = 0.0045;
         public static final double kiH = 0.000007;
         public static final double kdH = 0.000026;
 
-        // P = 0 - I = 0 - D = 0
+        // P = 0.0045 - I = 0.000007 - D = 0.000026
 
         public static final double MAX_SPEED = 4;
         public static final double MAX_ACCELERATION = 2;
@@ -34,11 +34,11 @@ public final class Constants {
 
     public static final class Drivebase {
         public static final double WHEEL_LOCK_TIME = 10; // Segundos
+        public static final String SWERVE_DIRECTORY = "swerve";
     }
 
     public static class OperatorConstants {
 
-        // Joystick Deadband
         public static final double LEFT_X_DEADBAND = 0.1;
         public static final double LEFT_Y_DEADBAND = 0.1;
 
@@ -76,6 +76,8 @@ public final class Constants {
         public static final double kPowerUp = 1;
         public static final double kEncoderTicksTop = 2000;
         public static final double kMinimalPower = 0;
+        public static final int kLimitSwitch = 2;
+    
 
     }
 

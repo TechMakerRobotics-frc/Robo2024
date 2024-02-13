@@ -24,6 +24,9 @@ public class PhotonVisionSubsystem extends SubsystemBase {
     public PhotonPipelineResult getLatestPipeline() {
         return camera.getLatestResult();
     }
+    public PhotonCamera getCamera(){
+        return camera;
+    }
 
     // Checks if there is a target in vision
     public boolean hasTarget(PhotonPipelineResult result) {

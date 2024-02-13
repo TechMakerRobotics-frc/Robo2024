@@ -19,7 +19,7 @@ public class UpElevator extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(elevator.getEndOfCourse()){
+    if(elevator.getLimiSwitch()){
       elevator.setMotorPower(ElevatorConstants.kPowerUp);
       elevator.resetEncoder();
     }
