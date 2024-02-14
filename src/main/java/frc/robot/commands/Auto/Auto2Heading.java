@@ -1,7 +1,7 @@
 
 package frc.robot.commands.Auto;
 
-import frc.robot.commands.swervedrive.auto.MoveXYHeading;
+import frc.robot.commands.swervedrive.MoveXYHeading;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
