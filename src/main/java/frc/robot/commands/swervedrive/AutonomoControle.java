@@ -1,5 +1,5 @@
 
-package frc.robot.commands.swervedrive.auto;
+package frc.robot.commands.swervedrive;
 
 
 import frc.robot.subsystems.SwerveSubsystem;

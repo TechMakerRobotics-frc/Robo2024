@@ -63,7 +63,9 @@ public class RobotContainer {
     // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
     driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
 
-    driverXbox.x().onTrue(drivebase.aimAtTarget(photonVision.getCamera()));
+    driverXbox.x().whileTrue(drivebase.aimAtTarget(photonVision.getCamera(),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND)));
 
     // Controle do operador:
 

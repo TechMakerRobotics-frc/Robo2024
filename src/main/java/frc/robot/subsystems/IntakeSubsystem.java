@@ -13,7 +13,8 @@ import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
 
   private static IntakeSubsystem instance;
-  DigitalInput sensor = new DigitalInput(0);
+  DigitalInput sensorLeft = new DigitalInput(IntakeConstants.kIntakeSensorLeft);
+  DigitalInput sensorRight = new DigitalInput(IntakeConstants.kIntakeSensorRight);
   // Motor ta ai
   CANSparkMax  motor = new CANSparkMax(IntakeConstants.kIntakeMotor,MotorType.kBrushless);
   
@@ -38,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
     return instance;
 }
 public boolean getSensor(){
-  return !sensor.get();
+  return !(sensorLeft.get() && sensorRight.get());
 }
 
 public void setMotorPower(double forward) {
