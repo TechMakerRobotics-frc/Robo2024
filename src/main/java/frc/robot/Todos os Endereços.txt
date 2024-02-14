@@ -38,3 +38,15 @@ Pigeon = 17
 PDP = 16
 
 Garra = 18
+
+RaspBerry Pi 3 Camera:
+ http://raspvision.local:5800/
+
+ Static ip: 10.90.47.111
+
+Orange Pi 5 Camera:
+
+http://photonvision.local:5800/
+
+Static ip: 10.90.47.110
+

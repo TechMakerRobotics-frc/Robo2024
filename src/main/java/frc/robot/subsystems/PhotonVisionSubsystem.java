@@ -8,14 +8,14 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
 
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+//import edu.wpi.first.networktables.NetworkTable;
+//import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PhotonVisionSubsystem extends SubsystemBase {
-    private NetworkTableInstance instance = NetworkTableInstance.getDefault();
-    private NetworkTable table = instance.getTable("photonvision");
+    //private NetworkTableInstance instance = NetworkTableInstance.getDefault();
+    //private NetworkTable table = instance.getTable("photonvision");
 
     PhotonCamera camera = new PhotonCamera("Notes");
 

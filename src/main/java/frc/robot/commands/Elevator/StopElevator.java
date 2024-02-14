@@ -1,21 +1,21 @@
-package frc.robot.commands.Claw;
+package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
-public class StopClaw extends InstantCommand {
+public class StopElevator extends InstantCommand {
 
-  private final ClawSubsystem claw = ClawSubsystem.getInstance();
+  private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
     @Override
     public void initialize() {
-      addRequirements(claw);
+      addRequirements(elevator);
     }
   
     @Override
     public void execute() {
   
-        claw.setMotorPower(0);
+        elevator.setMotorPower(0);
     }
 }
 
