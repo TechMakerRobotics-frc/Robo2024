@@ -47,7 +47,9 @@ public final class Constants {
 
     public static class IntakeConstants {
         public static final int kIntakeMotor = 14;
-        public static final int kReturnTicks = 0;
+        public static final int kIntakeSensorRight = 0;
+        public static final int kIntakeSensorLeft = 1;
+        
         public static final double kRampRate = 0;
         public static final double kPower = 0.5;
         public static final double kPowerShoot = 1;
