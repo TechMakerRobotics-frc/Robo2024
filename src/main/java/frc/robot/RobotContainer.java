@@ -71,7 +71,7 @@ public class RobotContainer {
         .onTrue(new StartShooter())
         .onFalse(new StopShooter());
 
-    driverXboxOperator.y().onTrue(new IntakeSensor());   // Falts conectar o sensor na RoboRio
+    driverXboxOperator.y().onTrue(new IntakeSensor());   // Falta conectar o sensor na RoboRio
 
     driverXboxOperator.a()
         .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))

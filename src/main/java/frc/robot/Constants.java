@@ -83,7 +83,7 @@ public final class Constants {
 
     public static class ClawConstants {
         public static final int kClawMotor = 18;
-        public static final double kpowerInside = 0.5;
+        public static final double kpowerInside = 0.2;
         public static final double kpowerOutside = -0.5;
         public static final double kMinimalPower = 0;
     }
