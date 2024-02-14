@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,6 +32,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
+import swervelib.SwerveModule;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
@@ -149,8 +151,8 @@ public class SwerveSubsystem extends SubsystemBase
       PhotonPipelineResult result = camera.getLatestResult();
       if (result.hasTargets())
       {
-        drive(getTargetSpeeds(0,
-                              0,
+        drive(getTargetSpeeds(translationX.getAsDouble(),
+                              translationY.getAsDouble(),
                               Rotation2d.fromDegrees(result.getBestTarget()
                                                            .getYaw()))); // Not sure if this will work, more math may be required.
       }
@@ -499,7 +501,16 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return swerveDrive.swerveDriveConfiguration;
   }
-
+  public Rotation2d getGyroYaw() {
+    return swerveDrive.getYaw();
+}
+ public SwerveModulePosition[] getModulePositions(){
+        SwerveModulePosition[] positions = new SwerveModulePosition[4];
+        for(SwerveModule mod : swerveDrive.getModules() ){
+            positions[mod.moduleNumber] = mod.getPosition();
+        }
+        return positions;
+    }  
   /**
    * Lock the swerve drive to prevent it from moving.
    */

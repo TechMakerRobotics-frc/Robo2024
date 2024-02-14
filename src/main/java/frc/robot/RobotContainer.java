@@ -23,6 +23,7 @@ import frc.robot.commands.Elevator.DownElevator;
 import frc.robot.commands.Elevator.UpElevator;
 import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Shooter.StopShooter;
+import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -32,95 +33,95 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
-  private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
-  private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
-  private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-  private final ClawSubsystem claw = ClawSubsystem.getInstance();
-  private final PhotonVisionSubsystem photonVision = new PhotonVisionSubsystem();
-  private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
+    private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
+    private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
+    private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+    private final ClawSubsystem claw = ClawSubsystem.getInstance();
+    private final PhotonVisionSubsystem photonVision = new PhotonVisionSubsystem();
+    private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
-  // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
-  CommandXboxController driverXbox = new CommandXboxController(0);
-  CommandXboxController driverXboxOperator = new CommandXboxController(1);
-  XboxController xbox = new XboxController(0);
-  Trigger twoBumper = new Trigger(() -> (driverXbox.getRawAxis(2) > 0.85 && driverXbox.getRawAxis(3) > 0.85));
-  Command driveFieldOrientedAnglularVelocity;
+    // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
+    CommandXboxController driverController = new CommandXboxController(0);
+    CommandXboxController operatorController = new CommandXboxController(1);
+    XboxController xbox = new XboxController(0);
+    Trigger twoBumper = new Trigger(
+            () -> (driverController.getRawAxis(2) > 0.85 && driverController.getRawAxis(3) > 0.85));
+    Command driveFieldOrientedAnglularVelocity;
 
-  public RobotContainer() {
-   
-     driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-      () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-      () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-      () -> (driverXbox.getRawAxis(3)-driverXbox.getRawAxis(2)));
+    public RobotContainer() {
 
-  }
-  // Configura os botões do Xbox.
-  void configureBindings() {
+        driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
+                () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+                () -> (driverController.getRawAxis(3) - driverController.getRawAxis(2)));
 
-    // Controle do piloto
+    }
 
-    driverXbox.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
-    // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
-    driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
+    // Configura os botões do Xbox.
+    void configureBindings() {
 
-    driverXbox.x().whileTrue(drivebase.aimAtTarget(photonVision.getCamera(),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND)));
+        // Controle do piloto
 
-    // Controle do operador:
+        driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
+        // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
+        driverController.a().onTrue(new InstantCommand(drivebase::lock));
 
-    driverXboxOperator.x()
-        .onTrue(new StartShooter())
-        .onFalse(new StopShooter());
+     
 
-    driverXboxOperator.y().onTrue(new IntakeSensor());   // Falta conectar o sensor na RoboRio
+        // Controle do operador:
 
-    driverXboxOperator.a()
-        .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))
-        .onTrue(new InstantCommand(() -> shooter.setMotorPower(ShooterConstants.kReversePower), shooter))
-        .onFalse(new InstantCommand(() -> intake.setMotorPower(0), intake))
-        .onFalse(new InstantCommand(() -> shooter.setMotorPower(0), shooter));
+        operatorController.x()
+                .onTrue(new StartShooter())
+                .onFalse(new StopShooter());
 
-    driverXboxOperator.b()
-        .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))
-        .onFalse(new InstantCommand(() -> intake.setMotorPower(0), intake));
+        operatorController.y().onTrue(new IntakeSensor()); // Falta conectar o sensor na RoboRio
 
-    driverXboxOperator.povUp()
-        // .onTrue(new UpElevator());
-        .onTrue(new InstantCommand(() -> elevator.setMotorPower(1)))
-        .onFalse(new InstantCommand(() -> elevator.setMotorPower(0)));
-    driverXboxOperator.povDown()
-        // .onTrue(new DownElevator());
-        .onTrue(new InstantCommand(() -> elevator.setMotorPower(-1)))
-        .onFalse(new InstantCommand(() -> elevator.setMotorPower(0)));
+        operatorController.a()
+                .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))
+                .onTrue(new InstantCommand(() -> shooter.setMotorPower(ShooterConstants.kReversePower), shooter))
+                .onFalse(new InstantCommand(() -> intake.setMotorPower(0), intake))
+                .onFalse(new InstantCommand(() -> shooter.setMotorPower(0), shooter));
 
-    driverXboxOperator.povRight()
-        .onTrue(new InsideClaw())
-        .onFalse(new StopClaw());
+        operatorController.b()
+                .onTrue(new InstantCommand(() -> intake.setMotorPower(IntakeConstants.kReversePower), intake))
+                .onFalse(new InstantCommand(() -> intake.setMotorPower(0), intake));
 
-    driverXboxOperator.povLeft()
-        .onTrue(new OutsideClaw())
-        .onFalse(new StopClaw());
+        operatorController.povUp()
+                // .onTrue(new UpElevator());
+                .onTrue(new InstantCommand(() -> elevator.setMotorPower(1)))
+                .onFalse(new InstantCommand(() -> elevator.setMotorPower(0)));
+        operatorController.povDown()
+                // .onTrue(new DownElevator());
+                .onTrue(new InstantCommand(() -> elevator.setMotorPower(-1)))
+                .onFalse(new InstantCommand(() -> elevator.setMotorPower(0)));
 
-    twoBumper
-        .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
-        .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
+        operatorController.povRight()
+                .onTrue(new InsideClaw())
+                .onFalse(new StopClaw());
 
-    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+        operatorController.povLeft()
+                .onTrue(new OutsideClaw())
+                .onFalse(new StopClaw());
 
-  }
+        twoBumper
+                .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
+                .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
+        drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
-    return drivebase.getAutonomousCommand("3 notes blue");
-  }
+    }
 
-  public void setDriveMode() {
-    // drivebase.setDefaultCommand();
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+
+        return drivebase.getAutonomousCommand("3 notes blue");
+    }
+
+    public void setDriveMode() {
+        // drivebase.setDefaultCommand();
+    }
 }
