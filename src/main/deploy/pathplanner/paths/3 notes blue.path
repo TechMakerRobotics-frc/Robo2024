@@ -1,0 +1,272 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3579149380506672,
+        "y": 5.529873281966941
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.469590494735114,
+        "y": 5.558377783420389
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9088139559973865,
+        "y": 5.529873281966941
+      },
+      "prevControl": {
+        "x": 3.0154638133025786,
+        "y": 5.531041547607229
+      },
+      "nextControl": {
+        "x": 2.8021640986921943,
+        "y": 5.5287050163266525
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0137726103591396,
+        "y": 5.529873281966941
+      },
+      "prevControl": {
+        "x": 2.1327170423988653,
+        "y": 5.527910831725173
+      },
+      "nextControl": {
+        "x": 1.8948281783194139,
+        "y": 5.531835732208709
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0137726103591396,
+        "y": 5.529873281966941
+      },
+      "prevControl": {
+        "x": 2.1720596815493733,
+        "y": 5.517892540902594
+      },
+      "nextControl": {
+        "x": 1.8554855391689058,
+        "y": 5.541854023031288
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9088139559973865,
+        "y": 7.012107357546319
+      },
+      "prevControl": {
+        "x": 2.289983891704798,
+        "y": 6.971748875092454
+      },
+      "nextControl": {
+        "x": 4.220021022855966,
+        "y": 7.097620861906662
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0137726103591396,
+        "y": 5.529873281966941
+      },
+      "prevControl": {
+        "x": 2.012447124994792,
+        "y": 5.50364029017587
+      },
+      "nextControl": {
+        "x": 2.015098095723487,
+        "y": 5.556106273758012
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.314618969586687,
+        "y": 6.119916462053417
+      },
+      "prevControl": {
+        "x": 5.636676767746347,
+        "y": 6.245217652233343
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "First Shoot",
+      "waypointRelativePos": 0.4,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 1.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartShooter"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 2.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "First Intake",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeSensor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Second Shoot",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StartShooter"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 1.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StopShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Second Intake",
+      "waypointRelativePos": 4.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeSensor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Thirdy Shoot",
+      "waypointRelativePos": 5.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StartShooter"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 1.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StopShooter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -1.950667049110946e-10,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
