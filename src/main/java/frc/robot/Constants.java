@@ -58,10 +58,10 @@ public final class Constants {
         public static final int pipeNu_normal = 7;
         public static final double higher_reflective_heightCm = 111.0;
         public static final double lower_reflective_heightCm = 61.0;
-        public static final double node_april_heightCm = 46.0;
-        public static final double hp_april_heightCm = 69.0;
-        public static final double limelightMountAngleDegrees = -19.5;
-        public static final double limelightLensHeightCm = 107.0;
+        public static final double node_april_heightCm = 120.0;
+        public static final double hp_april_heightCm = 120.0;
+        public static final double limelightMountAngleDegrees = -30;
+        public static final double limelightLensHeightCm = 12;
     
       }
     public static class OperatorConstants {
