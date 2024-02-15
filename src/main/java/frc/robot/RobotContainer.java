@@ -74,12 +74,12 @@ public class RobotContainer {
                 .onFalse(new StopIntake());
 
         operatorController.povUp()
-                .onTrue(new UpElevator())
-                .onFalse(new StopElevator());
+                .onTrue(new UpElevator());
+                //.onFalse(new StopElevator());
         operatorController.povDown()
-                .onTrue(new DownElevator())
-                .onFalse(new StopElevator());
-
+                .onTrue(new DownElevator());
+                //.onFalse(new StopElevator());
+        operatorController.back().onTrue(new StopElevator());
         operatorController.povRight()
                 .onTrue(new InsideClaw())
                 .onFalse(new StopClaw());

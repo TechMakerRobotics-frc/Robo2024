@@ -11,7 +11,6 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
 
   private static ShooterSubsystem instance;
-  boolean extended = false;
 
   //Dois motores, um de  cada lado 
   CANSparkMax  motorDown = new CANSparkMax(ShooterConstants.kShooterDownMotor,MotorType.kBrushless);

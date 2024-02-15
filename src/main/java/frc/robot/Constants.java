@@ -61,11 +61,9 @@ public final class Constants {
     public static class ShooterConstants {
         public static final int kShooterDownMotor = 13;
         public static final int kShooterUpMotor = 15;
-        public static final double kPowerDown = 1;
-        public static final double kPower = 0.75;
-        public static final double kReversePowerDown = -0.3;
+        public static final double kPower = 0.9;
         public static final double kReversePower = -0.3;
-        public static final double kWaitBeforeShoot = 1.0;
+        public static final double kWaitBeforeShoot = 1.5;
         public static final double kRampRate = 0.5;
         public static final double kMinimalPower = 0;
     }
@@ -76,7 +74,7 @@ public final class Constants {
         public static final int kElevatorRightMotor = 20;
         public static final double kPowerDown = -1;
         public static final double kPowerUp = 1;
-        public static final double kEncoderTicksTop = 2000;
+        public static final double kEncoderTicksTop = 200;
         public static final double kMinimalPower = 0;
         public static final int kLimitSwitch = 2;
     

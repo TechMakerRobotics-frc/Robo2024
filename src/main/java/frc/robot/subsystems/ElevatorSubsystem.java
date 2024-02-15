@@ -13,7 +13,7 @@ import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
   private static ElevatorSubsystem instance;
-  boolean extended = false;
+  boolean extending = false;
   //Dois motores, um de  cada lado 
   CANSparkMax  motorLeft = new CANSparkMax(ElevatorConstants.kElevatorLeftMotor,MotorType.kBrushless);
   CANSparkMax  motorRight = new CANSparkMax (ElevatorConstants.kElevatorRightMotor,MotorType.kBrushless);
@@ -42,6 +42,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     rightEncoder = motorRight.getEncoder();
   
     resetEncoder();
+    //setMotorPower(ElevatorConstants.kPowerDown);
     
   }
   public static ElevatorSubsystem getInstance() {
@@ -53,6 +54,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   //Função principal que movimenta o braço para frente(+) e  para tras(-)
   public void setMotorPower(double power) {
     SmartDashboard.putNumber("Elevator Potencia (%)", power * 100.0);
+    extending = power>0;
     motorRight.set(power);
     motorLeft.set(power);
   }
@@ -68,7 +70,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));
   }
   public boolean getLimiSwitch(){
-    return limiSwitch.get();
+    return !limiSwitch.get();
   }
   
   @Override
@@ -76,6 +78,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Encoder", getEncoder());
 
     SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
+    if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getLimiSwitch())){
+      motorRight.set(0);
+      motorLeft.set(0);
+    }
     if(getLimiSwitch()){
       resetEncoder();
     }    

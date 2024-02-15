@@ -4,38 +4,22 @@
 
 package frc.robot.commands.Elevator;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class DownElevator extends Command {
-  ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class DownElevator extends InstantCommand {
   public DownElevator() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevator);
+    addRequirements(ElevatorSubsystem.getInstance());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(!elevator.getLimiSwitch()){
-      elevator.setMotorPower(ElevatorConstants.kPowerDown);
-    }
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    elevator.setMotorPower(0);
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return elevator.getLimiSwitch();
+    ElevatorSubsystem.getInstance().setMotorPower(ElevatorConstants.kPowerDown);
   }
 }
