@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.Constants.Auton;
+import frc.robot.Constants.Auto;
 
 public class MoveXYHeading extends Command {
   
@@ -72,15 +72,15 @@ public class MoveXYHeading extends Command {
     // Cálculos -PID-
     double sensorX = swerve.getPose().getX();
     double errorX = distanceX - sensorX;
-    speedX = Auton.kp*errorX;
+    speedX = Auto.kp*errorX;
 
     double sensorY = swerve.getPose().getY();
     double errorY = distanceY - sensorY;
-    speedY = Auton.kp*errorY;
+    speedY = Auto.kp*errorY;
 
     double sensorH = swerve.getPose().getRotation().getDegrees();
     double errorH = heading - sensorH;
-    speedH = Auton.kpH*errorH;
+    speedH = Auto.kpH*errorH;
 
   
     
@@ -93,9 +93,9 @@ public class MoveXYHeading extends Command {
     errorSumY += errorY * dt;
     errorSumH += errorH * dt;
 
-    speedX = Auton.kp * errorX + Auton.ki * errorSumX + Auton.kd * errorRateX;
-    speedY = Auton.kp * errorY + Auton.ki * errorSumY + Auton.kd * errorRateY;
-    speedH = Auton.kpH * errorH + Auton.kiH * errorSumH + Auton.kdH * errorRateH;
+    speedX = Auto.kp * errorX + Auto.ki * errorSumX + Auto.kd * errorRateX;
+    speedY = Auto.kp * errorY + Auto.ki * errorSumY + Auto.kd * errorRateY;
+    speedH = Auto.kpH * errorH + Auto.kiH * errorSumH + Auto.kdH * errorRateH;
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorX = errorX;
     lastErrorY = errorY;

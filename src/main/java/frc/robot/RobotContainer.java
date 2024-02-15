@@ -87,6 +87,7 @@ public class RobotContainer {
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
 
+
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));

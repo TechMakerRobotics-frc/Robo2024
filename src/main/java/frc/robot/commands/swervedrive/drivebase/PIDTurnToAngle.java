@@ -61,7 +61,7 @@ public class PIDTurnToAngle extends Command {
 
         /* Drive */
         s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Auton.MAX_SPEED), 
+            new Translation2d(translationVal, strafeVal).times(Constants.Auto.MAX_SPEED), 
             rotationVal * 4, 
             true
         );
