@@ -4,12 +4,14 @@ package frc.robot;
 //import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToSpeaker;
@@ -30,9 +32,32 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
     private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
     //private final PhotonVisionSubsystem photonVision = new PhotonVisionSubsystem();
+    
+    private final Joystick m_operatorControlller = new Joystick(OperatorConstants.kOperatorControllerPort);
+    //Eventos do intake prontos para os botões
+  Trigger bIntakeSensor = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonIntakeSensor);
+  Trigger bReverseIntake = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonReverseIntake);
+  Trigger bAlignToSpeaker = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonAlignToSpeaker);
+  
+  //Eventos do shooter prontos para os botões
+  Trigger bStartShooter = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonStartShooter);
+  Trigger bReverseShooter = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonReverseShooter);
+
+  //Eventos da garra prontos para os botões
+  Trigger bInsideClaw = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonInsideClaw);
+  Trigger bOutisdeClaw = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonOutsideClaw);
+
+  // Eventos do elevador prontos para os botões
+  Trigger bUpElevator = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonUpElevator);
+  Trigger bDownElevator = new JoystickButton(m_operatorControlller,OperatorConstants.kButtonDownElevator);
+  Trigger bStopElevator = new JoystickButton(m_operatorControlller, OperatorConstants.kButtonStopElevator);
+
+
+
 
     CommandXboxController driverController = new CommandXboxController(0);
-    CommandXboxController operatorController = new CommandXboxController(1);
+    //CommandXboxController operatorController = new CommandXboxController(1);
+    Joystick operatorController = new Joystick(1); 
     XboxController xbox = new XboxController(0);
     Trigger twoBumper = new Trigger(
             () -> (driverController.getRawAxis(2) > 0.85 && driverController.getRawAxis(3) > 0.85));
@@ -58,7 +83,33 @@ public class RobotContainer {
 
         // Controle do operador:
 
-        operatorController.x()
+
+         bIntakeSensor.onTrue(new IntakeSensor()); 
+
+    bReverseIntake.onTrue(new ReverseIntake())
+              .onFalse(new StopIntake());
+   
+    bAlignToSpeaker.onTrue(new AlignToSpeaker());
+
+    bStartShooter.onTrue(new StartShooter())
+          .onFalse(new StopShooter());
+    
+    bReverseShooter.onTrue(new ReverseShooter())
+                .onFalse(new StopShooter());
+
+    bInsideClaw.onTrue(new InsideClaw())
+               .onFalse(new StopClaw());
+
+    bOutisdeClaw.onTrue(new OutsideClaw())
+                .onFalse(new StopClaw());
+    
+    bUpElevator.onTrue(new UpElevator())
+                  .onFalse(new StopElevator());
+
+    bDownElevator.onTrue(new DownElevator())
+                .onFalse(new StopElevator());
+
+   /*      operatorControllerx.()
                 .onTrue(new StartShooter())
                 .onFalse(new StopShooter());
 
@@ -67,17 +118,18 @@ public class RobotContainer {
         operatorController.a()
                 .onTrue(new ReverseShooter())
                 .onFalse(new StopShooter());
+                
 
         operatorController.b()
                 .onTrue(new ReverseIntake())
                 .onFalse(new StopIntake());
 
         operatorController.povUp()
-                .onTrue(new UpElevator());
-                //.onFalse(new StopElevator());
+                .onTrue(new UpElevator())
+                .onFalse(new StopElevator());
         operatorController.povDown()
-                .onTrue(new DownElevator());
-                //.onFalse(new StopElevator());
+                .onTrue(new DownElevator())
+                .onFalse(new StopElevator());
         operatorController.back().onTrue(new StopElevator());
         operatorController.povRight()
                 .onTrue(new InsideClaw())
@@ -85,7 +137,7 @@ public class RobotContainer {
         operatorController.povLeft()
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
-        operatorController.leftBumper().onTrue(new AlignToSpeaker());
+        operatorController.leftBumper().onTrue(new AlignToSpeaker()); */
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

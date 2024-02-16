@@ -69,6 +69,21 @@ public final class Constants {
         public static final double LEFT_X_DEADBAND = 0.1;
         public static final double LEFT_Y_DEADBAND = 0.1;
 
+
+    public static final int kOperatorControllerPort = 1;
+    public static final int kButtonIntakeSensor = 1; 
+    public static final int kButtonReverseIntake = 2; 
+    public static final int kButtonAlignToSpeaker = 3;
+    //public static final int kButton = 4;
+    public static final int kButtonStartShooter = 5;
+    public static final int kButtonReverseShooter = 6;
+    public static final int kButtonInsideClaw = 7;
+    public static final int kButtonOutsideClaw = 8; 
+    public static final int kButtonUpElevator = 9; 
+    public static final int kButtonDownElevator = 10; 
+    public static final int kButtonStopElevator = 11; 
+   // public static final int kButton = 12;
+
         public static final int DRIVER_CONTROLLER_PORT = 0;
     }
 
@@ -90,7 +105,7 @@ public final class Constants {
         public static final int kShooterUpMotor = 15;
         public static final double kPower = 0.9;
         public static final double kReversePower = -0.3;
-        public static final double kWaitBeforeShoot = 1.5;
+        public static final double kWaitBeforeShoot = 1.5; // 2.0
         public static final double kRampRate = 0.5;
         public static final double kMinimalPower = 0;
     }
