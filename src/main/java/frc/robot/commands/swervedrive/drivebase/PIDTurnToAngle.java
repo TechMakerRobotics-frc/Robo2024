@@ -48,17 +48,7 @@ public class PIDTurnToAngle extends Command {
         /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), OperatorConstants.LEFT_Y_DEADBAND);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), OperatorConstants.LEFT_Y_DEADBAND);
-
-        // if (elevatorHeight >= 30000) {
-        //     translationVal = translationVal * slowSpeed;
-        //     strafeVal = strafeVal * slowSpeed;
-        // }
-
-        // else if (elevatorHeight > 5000 && elevatorHeight < 29999) {
-        //     translationVal = translationVal * 0.5;
-        //     strafeVal = strafeVal * 0.5;
-        // }
-
+   
         /* Drive */
         s_Swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Auto.MAX_SPEED), 

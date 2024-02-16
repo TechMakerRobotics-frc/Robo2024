@@ -48,21 +48,17 @@ public final class Constants {
         public static final String SWERVE_DIRECTORY = "swerve";
     }
     public static class LimelightConstants{
-        public static final int pipeNu_megatag = 0;
-        public static final int pipeNu_node18_april = 1 ;
-        public static final int pipeNu_node27_april = 2 ;
-        public static final int pipeNu_node36_april = 3 ;
-        public static final int pipeNu_hp45_april = 4;
-        public static final int pipeNu_lower_reflective = 5;
-        public static final int pipeNu_higher_reflective = 6;
-        public static final int pipeNu_normal = 7;
-        public static final double higher_reflective_heightCm = 111.0;
-        public static final double lower_reflective_heightCm = 61.0;
-        public static final double node_april_heightCm = 120.0;
-        public static final double hp_april_heightCm = 120.0;
-        public static final double limelightMountAngleDegrees = -30;
-        public static final double limelightLensHeightCm = 12;
-    
+        public static final double MAX_ERROR_VISION_POSE = 1.0; // meters
+        public static final double FORWARD = Units.inchesToMeters(14); // TODO
+        public static final double UP = Units.inchesToMeters(3.75); // meters
+        public static final double PITCH = 65; // degrees
+
+        public static final int[] ID_SPEAKER_BLUE = {7, 8};
+        public static final int[] ID_SPEAKER_RED = {3, 4};
+        public static final int ID_AMP_BLUE = 6;
+        public static final int ID_AMP_RED = 5;
+        public static final int[] ID_STAGE_BLUE = {14, 15, 16};
+        public static final int[] ID_STAGE_RED = {11, 12, 13};
       }
     public static class OperatorConstants {
 
