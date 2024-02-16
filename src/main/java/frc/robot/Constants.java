@@ -15,6 +15,14 @@ public final class Constants {
     public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
     public static final class Auto {
+
+        public static final double VX_STAGE_kP = 0.16;
+        public static final double VY_STAGE_kP = 0.13;
+        public static final double MAX_ERROR_DEG_TX_STAGE = 0.5;
+        public static final double MAX_ERROR_DEG_TY_STAGE = 0.5;
+        public static final double VERTICAL_DEG_STAGE = 10;
+
+        
         public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
         public static final PIDConstants ANGLE_PID   = new PIDConstants(0.4, 0, 0.01);  
         public static final double kp = 0.76;
