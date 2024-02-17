@@ -3,6 +3,8 @@ package frc.robot.commands.Auto;
 
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.AlignToNote;
+import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Shooter.StartShooter;
@@ -16,26 +18,21 @@ public class Auto extends SequentialCommandGroup {
   public Auto (SwerveSubsystem drivebase){
   {
       addCommands(
-        new StartIntake(),
-        new MoveXYHeading(-3.1, 0, 0, drivebase),
-        new IntakeSensor(),
-        new MoveXYHeading(2.1, 0, 0, drivebase),
+        new AlignToSpeaker(),
         new StartShooter(),
-        new WaitCommand(0.5),
+        new WaitCommand(1),
         new StopShooter(),
-        new MoveXYHeading(-2.1, 0, 0, drivebase),
-        new MoveXYHeading(0, 0, -90, drivebase),
         new StartIntake(),
-        new MoveXYHeading(0, -1.6, 0, drivebase),
+        new AlignToNote(),
+        new MoveXYHeading(-0.9, 0, 0, drivebase),
         new IntakeSensor(),
-        new MoveXYHeading(0, 1.6, 0, drivebase),
-        new MoveXYHeading(0, 0, 90, drivebase),
-        new MoveXYHeading(2.1, 0, 0, drivebase),
+        new AlignToSpeaker(),
         new StartShooter(),
-        new WaitCommand(0.5),
+        new WaitCommand(1),
         new StopShooter());
 
-        // Pega a nota central, e a nota da esquerda.
+        // Pega a nota central.
+
   // para andar 2metros x = 2.1
   // para andar 2metros y = 2.2
                                         

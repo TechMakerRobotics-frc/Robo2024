@@ -21,6 +21,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
@@ -40,6 +42,7 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import frc.robot.Constants.Drivebase;
+import frc.robot.util.Limelight;
 public class SwerveSubsystem extends SubsystemBase
 {
 
@@ -52,6 +55,8 @@ public class SwerveSubsystem extends SubsystemBase
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
   public        double      maximumSpeed = 0.2;
+  private final Timer timer = new Timer();
+ 
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -88,6 +93,8 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
+    timer.reset();
+    timer.start();
   }
 
   /**
@@ -332,6 +339,10 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    if(Limelight.hasTargets()){
+      swerveDrive.addVisionMeasurement(Limelight.getBotPose2d(), timer.get());
+    }
+    SmartDashboard.putData(swerveDrive.field);
   }
 
   @Override

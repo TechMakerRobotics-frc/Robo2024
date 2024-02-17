@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
+import frc.robot.commands.Auto.Auto;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -45,7 +46,7 @@ public class RobotContainer {
         driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
                 () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
                 () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-                () -> (driverController.getRawAxis(3) - driverController.getRawAxis(2)));
+                () -> (driverController.getRawAxis(2) - driverController.getRawAxis(3)));
 
     }
 
@@ -98,7 +99,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
 
-        return drivebase.getAutonomousCommand("3 notes blue");
+        return new Auto(drivebase);
+        //return drivebase.getAutonomousCommand("3 notes blue");
     }
 
     public void setDriveMode() {
