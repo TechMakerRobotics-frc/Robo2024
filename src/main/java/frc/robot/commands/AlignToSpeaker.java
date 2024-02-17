@@ -30,6 +30,7 @@ public class AlignToSpeaker extends Command {
 
   @Override
   public void initialize() {
+    Limelight.StartLimelight();
     vxStageController.reset();
     vyStageController.reset();
     timer.reset();
@@ -41,8 +42,8 @@ public class AlignToSpeaker extends Command {
   @Override
   public void execute() {
     if (Limelight.atSpeaker()) {
-      double vo = -Limelight.getTx()/500;
-      double vy = -(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT-Limelight.getCentimetersFromTarget())/500;
+      double vo = -Limelight.getTx()/50;
+      double vy = -(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT-Limelight.getCentimetersFromTarget())/50;
       SmartDashboard.putNumber("Tx", vo);
       SmartDashboard.putNumber("Distance", Limelight.getCentimetersFromTarget());
       swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(vy,0, vo, swerve.getHeading()));
@@ -52,12 +53,15 @@ public class AlignToSpeaker extends Command {
 
   @Override
   public boolean isFinished() {
-    return (vxStageController.atSetpoint() /* && vyStageController.atSetpoint() */) ||
-        timer.get() >= 2;
+    return false;//timer.get() >= 2;
   }
 
   @Override
   public void end(boolean interrupted) {
+
+    Limelight.setPipeline(LimelightConstants.POSE_PIPELINE);
+        swerve.resetOdometry(Limelight.getBotPose2d());
+    swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
   }

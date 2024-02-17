@@ -4,6 +4,8 @@ package frc.robot;
 //import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 //import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -25,6 +27,7 @@ import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
+import frc.robot.commands.swervedrive.driveToPose;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -86,8 +89,9 @@ public class RobotContainer {
         operatorController.povLeft()
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
-        driverController.leftBumper().onTrue(new AlignToSpeaker());
-        driverController.rightBumper().onTrue(new AlignToNote());
+        driverController.leftBumper().whileTrue(new AlignToSpeaker());
+        driverController.rightBumper().whileTrue(new AlignToNote());
+        driverController.b().onTrue(new driveToPose());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

@@ -7,12 +7,15 @@ package frc.robot.commands;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.util.Limelight;
 import frc.robot.util.PhotonVisionNote;
 
 public class AlignToNote extends Command {
@@ -41,8 +44,8 @@ public class AlignToNote extends Command {
     if (PhotonVisionNote.hasTarget(p)) {
       PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
 
-      double vo = -PhotonVisionNote.getYaw(t)/ 500;
-      double vy = -(PhotonVisionNote.getPitch(t)+VisionConstants.MAX_PITCH )/ 500;
+      double vo = -PhotonVisionNote.getYaw(t)/ 20;
+      double vy = -(PhotonVisionNote.getPitch(t)+VisionConstants.MAX_PITCH )/ 20;
       PhotonVisionNote.printToDashboard();
       //swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy, 0, vo, swerve.getHeading()));
       swerve.drive(new Translation2d( vy,0),vo,false);
@@ -52,11 +55,13 @@ public class AlignToNote extends Command {
 
   @Override
   public boolean isFinished() {
-    return timer.get() >= 2;
+    return false;//timer.get() >= 2;
   }
 
   @Override
   public void end(boolean interrupted) {
+    swerve.resetOdometry(Limelight.getBotPose2d());
+    swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
   }

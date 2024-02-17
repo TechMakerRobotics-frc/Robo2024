@@ -53,8 +53,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = 0.2;
-  private final Timer timer = new Timer();
+  public        double      maximumSpeed = 3;
  
 
   /**
@@ -92,8 +91,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
-    timer.reset();
-    timer.start();
+
   }
 
   /**
@@ -339,9 +337,11 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     if(Limelight.hasTargets()){
-      swerveDrive.addVisionMeasurement(Limelight.getBotPose2d(), timer.get());
+      SmartDashboard.putString("POSE",Limelight.getBotPose2d().toString());
+      
     }
     SmartDashboard.putData(swerveDrive.field);
+    SmartDashboard.putString("POSE BOT",getPose().toString());
   }
 
   @Override

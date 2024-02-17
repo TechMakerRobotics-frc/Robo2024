@@ -1,0 +1,20 @@
+{
+  "Connections": {
+    "open": true
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "9047"
+  },
+  "Persistent Values": {
+    "open": false
+  },
+  "retained": {
+    "limelight": {
+      "double[]##v_/limelight/botpose": {
+        "open": true
+      },
+      "open": true
+    }
+  }
+}
