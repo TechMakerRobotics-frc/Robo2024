@@ -57,10 +57,6 @@ public final class Constants {
     }
     public static class LimelightConstants{
         public static final double MAX_ERROR_VISION_POSE = 1.0; // meters
-        public static final double FORWARD = Units.inchesToMeters(14); // TODO
-        public static final double UP = Units.inchesToMeters(3.75); // meters
-        public static final double PITCH = 65; // degrees
-
         public static final int[] ID_SPEAKER_BLUE = {7, 7};
         public static final int[] ID_SPEAKER_RED = {3, 3};
         public static final int ID_AMP_BLUE = 6;
@@ -70,6 +66,10 @@ public final class Constants {
         public static final int SPEAKER_BLUE_PIPELINE = 0;
         public static final int SPEAKER_RED_PIPELINE = 1;
         public static final double SPEAKER_DISTANCE_TO_SHOOT = 230;
+      }
+      public static class VisionConstants{
+      
+        public static final double MAX_PITCH = 18;
       }
     public static class OperatorConstants {
 

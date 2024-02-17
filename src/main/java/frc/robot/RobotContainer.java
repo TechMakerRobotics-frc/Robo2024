@@ -6,16 +6,14 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 //import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.AlignToStage;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -33,7 +31,6 @@ import frc.robot.util.Limelight;
 
 public class RobotContainer {
     private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
-    //private final PhotonVisionSubsystem photonVision = new PhotonVisionSubsystem();
 
     CommandXboxController driverController = new CommandXboxController(0);
     CommandXboxController operatorController = new CommandXboxController(1);
@@ -89,6 +86,7 @@ public class RobotContainer {
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
         driverController.leftBumper().onTrue(new AlignToSpeaker());
+        driverController.rightBumper().onTrue(new AlignToNote());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
