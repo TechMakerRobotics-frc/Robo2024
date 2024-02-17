@@ -4,75 +4,61 @@
 
 package frc.robot.commands;
 
-import java.util.Optional;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.LimelightHelpers;
+import frc.robot.util.Limelight;
+import frc.robot.Constants.Auto;
+import frc.robot.Constants.LimelightConstants;
 
 public class AlignToSpeaker extends Command {
-  private static final int SpeakerTagIDBlue = 7;
-  private static final int SpeakerTagIDRed = 4;
-  private int SpeakerTagID;
-  private LimelightHelpers.LimelightTarget_Fiducial ll = new LimelightHelpers.LimelightTarget_Fiducial();
+  private static PIDController vxStageController = new PIDController(Auto.VX_STAGE_kP, 0, 0);
+  private static PIDController vyStageController = new PIDController(Auto.VY_STAGE_kP, 0, 0);
+  private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
+  private final Timer timer = new Timer();
   private Command defaultCommand;
-  SwerveSubsystem drive = SwerveSubsystem.getInstance();
-  Boolean finished = false;
-  String commandString = "AlingToSpeaker";
-  /** Creates a new AlignToSpeaker. */
   public AlignToSpeaker() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drive);
-    Optional<Alliance> ally = DriverStation.getAlliance();
-    if (ally.isPresent()) {
-      if (ally.get() == Alliance.Red) {
-        SpeakerTagID = SpeakerTagIDRed;
-      }
-      if (ally.get() == Alliance.Blue) {
-        SpeakerTagID = SpeakerTagIDBlue;
-      }
-    }
-    SmartDashboard.putString(commandString+"/Tag to Shoot", String.valueOf(SpeakerTagID));
-
-    
+    addRequirements(swerve);
+    vxStageController.setTolerance(Auto.MAX_ERROR_DEG_TX_STAGE);
+    vyStageController.setTolerance(Auto.MAX_ERROR_DEG_TY_STAGE);
+    vxStageController.setSetpoint(0);
+    vyStageController.setSetpoint(Auto.VERTICAL_DEG_STAGE);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    defaultCommand = drive.getDefaultCommand();
-    drive.removeDefaultCommand();
-    int tag = (int)ll.fiducialID;
-    SmartDashboard.putString(commandString+"/Tag On face", String.valueOf(tag));
-    if(tag!=SpeakerTagID)
-    {
-      SmartDashboard.putString(commandString, "Mirando na tag errada");
-      finished = true;
+    vxStageController.reset();
+    vyStageController.reset();
+    timer.reset();
+    timer.start();
+    defaultCommand = swerve.getDefaultCommand();
+    swerve.removeDefaultCommand();
+  }
+
+  @Override
+  public void execute() {
+    if (Limelight.atSpeaker()) {
+      double vo = -Limelight.getTx()/500;
+      double vy = -(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT-Limelight.getCentimetersFromTarget())/500;
+      SmartDashboard.putNumber("Tx", vo);
+      SmartDashboard.putNumber("Distance", Limelight.getCentimetersFromTarget());
+      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(vy,0, vo, swerve.getHeading()));
+
     }
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    SmartDashboard.putNumber(commandString+"/Rotation", ll.tx);
-    SmartDashboard.putNumber(commandString+"/Vertical", ll.ty);
-    SmartDashboard.putNumber(commandString+"/Area", ll.ta);
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    drive.setDefaultCommand(defaultCommand);
-    SmartDashboard.putString(commandString, "Retornado Comando padrao");
-  }
-
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return (vxStageController.atSetpoint() /* && vyStageController.atSetpoint() */) ||
+        timer.get() >= 2;
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    swerve.drive(new ChassisSpeeds());
+    swerve.setDefaultCommand(defaultCommand);
   }
 }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.AlignToStage;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
@@ -55,14 +56,11 @@ public class RobotContainer {
     void configureBindings() {
         Limelight.StartLimelight();
         // Controle do piloto
-        //leds.setDefaultCommand(new RunCommand(()->leds.setRGB(operatorController.getRightX(), operatorController.getLeftX(), operatorController.getLeftY()),leds));
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
-        // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverController.a().onTrue(new InstantCommand(drivebase::lock));
 
         // Controle do operador:
-        hasTarget.whileTrue(new RunCommand(()-> SmartDashboard.putNumber("Distance", Limelight.getCentimetersFromTarget())));
-
+       
         operatorController.x()
                 .onTrue(new StartShooter())
                 .onFalse(new StopShooter());
@@ -90,7 +88,7 @@ public class RobotContainer {
         operatorController.povLeft()
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
-        operatorController.leftBumper().onTrue(new AlignToStage());
+        driverController.leftBumper().onTrue(new AlignToSpeaker());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

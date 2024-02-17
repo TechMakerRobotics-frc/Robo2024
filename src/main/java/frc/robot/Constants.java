@@ -69,6 +69,7 @@ public final class Constants {
         public static final int[] ID_STAGE_RED = {11, 12, 13};
         public static final int SPEAKER_BLUE_PIPELINE = 0;
         public static final int SPEAKER_RED_PIPELINE = 1;
+        public static final double SPEAKER_DISTANCE_TO_SHOOT = 230;
       }
     public static class OperatorConstants {
 
