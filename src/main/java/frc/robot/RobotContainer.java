@@ -6,13 +6,15 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 //import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AlignToSpeaker;
+import frc.robot.commands.AlignToStage;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -26,6 +28,7 @@ import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.util.Limelight;
 
 public class RobotContainer {
     private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
@@ -36,6 +39,7 @@ public class RobotContainer {
     XboxController xbox = new XboxController(0);
     Trigger twoBumper = new Trigger(
             () -> (driverController.getRawAxis(2) > 0.85 && driverController.getRawAxis(3) > 0.85));
+    Trigger hasTarget = new Trigger(()->Limelight.hasTargets());
     Command driveFieldOrientedAnglularVelocity;
 
     public RobotContainer() {
@@ -49,14 +53,15 @@ public class RobotContainer {
 
     // Configura os botões do Xbox.
     void configureBindings() {
-
+        Limelight.StartLimelight();
         // Controle do piloto
-
+        //leds.setDefaultCommand(new RunCommand(()->leds.setRGB(operatorController.getRightX(), operatorController.getLeftX(), operatorController.getLeftY()),leds));
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
         // driverXbox.povLeft().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverController.a().onTrue(new InstantCommand(drivebase::lock));
 
         // Controle do operador:
+        hasTarget.whileTrue(new RunCommand(()-> SmartDashboard.putNumber("Distance", Limelight.getCentimetersFromTarget())));
 
         operatorController.x()
                 .onTrue(new StartShooter())
@@ -85,7 +90,7 @@ public class RobotContainer {
         operatorController.povLeft()
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
-        operatorController.leftBumper().onTrue(new AlignToSpeaker());
+        operatorController.leftBumper().onTrue(new AlignToStage());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

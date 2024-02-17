@@ -61,12 +61,14 @@ public final class Constants {
         public static final double UP = Units.inchesToMeters(3.75); // meters
         public static final double PITCH = 65; // degrees
 
-        public static final int[] ID_SPEAKER_BLUE = {7, 8};
-        public static final int[] ID_SPEAKER_RED = {3, 4};
+        public static final int[] ID_SPEAKER_BLUE = {7, 7};
+        public static final int[] ID_SPEAKER_RED = {3, 3};
         public static final int ID_AMP_BLUE = 6;
         public static final int ID_AMP_RED = 5;
         public static final int[] ID_STAGE_BLUE = {14, 15, 16};
         public static final int[] ID_STAGE_RED = {11, 12, 13};
+        public static final int SPEAKER_BLUE_PIPELINE = 0;
+        public static final int SPEAKER_RED_PIPELINE = 1;
       }
     public static class OperatorConstants {
 
