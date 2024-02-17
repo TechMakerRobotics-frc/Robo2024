@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConstants;
 
 public class LEDSSubsystem extends SubsystemBase {
   SerialPort arduino = null;
   double timeoutColor = 0;
+  private int r,g,b;
 
   public LEDSSubsystem() {
     try{
@@ -52,10 +52,12 @@ public void setLedTeamColor(){
   }
 
   public void setRGB(int R, int G, int B){
-   arduino.writeString(String.format("%3i%3i%3i\n", R,G,B)); 
+   r = R;
+   g = G;
+   b = B;
   }
   @Override
   public void periodic() {
-  
+  arduino.writeString(String.format("|%3i%3i%3i\n", r,g,b)); 
   }
 }
