@@ -14,24 +14,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 public class PIDTurnToAngle extends Command {    
-    private SwerveSubsystem s_Swerve;    
-    private DoubleSupplier translationSup;
-    private DoubleSupplier strafeSup;
+    private SwerveSubsystem s_Swerve = SwerveSubsystem.getInstance();    
+
     public double rotationVal = 0;
 
     public double targetAngle = 0;
     public double currentAngle = 0;
     public double acceptableError = 0;
 
-    private final PIDController angleController = new PIDController(0.012, 0, 0); //ki used to be 0
+    private final PIDController angleController = new PIDController(0.12, 0.05, 0); //ki used to be 0
 
-    public PIDTurnToAngle(SwerveSubsystem s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, Boolean robotCentricSup, int targetAngle) {
-        this.s_Swerve = s_Swerve;
+    public PIDTurnToAngle( int targetAngle) {
         addRequirements(s_Swerve);
 
-        this.translationSup = translationSup;
-        this.strafeSup = strafeSup;
-        this.targetAngle = targetAngle;
         angleController.enableContinuousInput(0, 360);
     }
 
@@ -45,20 +40,16 @@ public class PIDTurnToAngle extends Command {
         // currentAngle = s_Swerve.getGyroYaw().getDegrees() + 180;
         rotationVal = angleController.calculate(currentAngle, targetAngle);
         
-        /* Get Values, Deadband*/
-        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), OperatorConstants.LEFT_Y_DEADBAND);
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), OperatorConstants.LEFT_Y_DEADBAND);
-   
         /* Drive */
         s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Auto.MAX_SPEED), 
+            new Translation2d(0, 0), 
             rotationVal * 4, 
             true
         );
     }
 
     public boolean isFinished() {
-        return false;//angleController.atSetpoint();
+        return angleController.atSetpoint();
     }
 
     protected void end() {

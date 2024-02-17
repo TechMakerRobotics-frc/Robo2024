@@ -19,15 +19,25 @@ public class AlignToSpeaker extends Command {
   private static PIDController vyStageController = new PIDController(Auto.VY_STAGE_kP, 0, 0);
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
   private final Timer timer = new Timer();
+  private double _timeout;
   private Command defaultCommand;
+
+  public AlignToSpeaker(double timeout) {
+    addRequirements(swerve);
+    vxStageController.setTolerance(Auto.MAX_ERROR_DEG_TX_STAGE);
+    vyStageController.setTolerance(Auto.MAX_ERROR_DEG_TY_STAGE);
+    vxStageController.setSetpoint(0);
+    vyStageController.setSetpoint(Auto.VERTICAL_DEG_STAGE);
+    _timeout = timeout;
+  }
   public AlignToSpeaker() {
     addRequirements(swerve);
     vxStageController.setTolerance(Auto.MAX_ERROR_DEG_TX_STAGE);
     vyStageController.setTolerance(Auto.MAX_ERROR_DEG_TY_STAGE);
     vxStageController.setSetpoint(0);
     vyStageController.setSetpoint(Auto.VERTICAL_DEG_STAGE);
+    _timeout = 20;
   }
-
   @Override
   public void initialize() {
     Limelight.StartLimelight();
@@ -53,7 +63,7 @@ public class AlignToSpeaker extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;//timer.get() >= 2;
+    return timer.get() >= _timeout;
   }
 
   @Override

@@ -4,8 +4,6 @@ package frc.robot;
 //import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 //import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -16,7 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.Auto;
+import frc.robot.commands.Auto.Auto4Notes;
+import frc.robot.commands.Auto.HeadingTest;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -27,7 +26,6 @@ import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
-import frc.robot.commands.swervedrive.driveToPose;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -91,7 +89,7 @@ public class RobotContainer {
                 .onFalse(new StopClaw());
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
-        driverController.b().onTrue(new driveToPose());
+        driverController.b().onTrue(new Auto4Notes());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
@@ -103,7 +101,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
 
-        return new Auto(drivebase);
+        return null;
         //return drivebase.getAutonomousCommand("3 notes blue");
     }
 

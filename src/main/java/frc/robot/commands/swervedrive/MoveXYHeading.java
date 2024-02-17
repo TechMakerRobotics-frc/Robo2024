@@ -2,7 +2,7 @@
 package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,7 +13,7 @@ public class MoveXYHeading extends Command {
   
   double distanceX, distanceY, heading;
   
-  SwerveSubsystem swerve;
+  SwerveSubsystem swerve = SwerveSubsystem.getInstance();
   boolean finish = false;
   
   double lastTimestamp;
@@ -26,11 +26,10 @@ public class MoveXYHeading extends Command {
   double errorSumY = 0;
   double errorSumH = 0;
   
-  public MoveXYHeading(double distanceX, double distanceY, double heading, SwerveSubsystem swerve) {
+  public MoveXYHeading(double distanceX, double distanceY, double heading) {
     this.distanceX = distanceX;
     this.distanceY = distanceY;
     this.heading = heading;
-    this.swerve = swerve;
     SmartDashboard.putNumber("Distance Xi", distanceX);
     SmartDashboard.putNumber("Distance Yi", distanceY);
     SmartDashboard.putNumber("Giro", heading);
@@ -104,11 +103,8 @@ public class MoveXYHeading extends Command {
     double xVelocity   = Math.pow(speedX, 3);
     double yVelocity   = Math.pow(speedY, 3);
     double angVelocity = Math.pow(speedH, 3);
-    
-    swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
-                 angVelocity,
-                 true );
-    
+    swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(xVelocity,yVelocity, angVelocity, swerve.getHeading()));
+
   }
 
   @Override

@@ -31,9 +31,9 @@ public final class Constants {
 
         // P = 0.76 - I = 0.36 - D = 0
 
-        public static final double kpH = 0.0045;
+        public static final double kpH = 0.042;
         public static final double kiH = 0.000007;
-        public static final double kdH = 0.000026;
+        public static final double kdH = 0;
 
         // P = 0.0045 - I = 0.000007 - D = 0.000026
 

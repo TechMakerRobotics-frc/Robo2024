@@ -7,12 +7,10 @@ package frc.robot.commands;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Limelight;
@@ -23,12 +21,15 @@ public class AlignToNote extends Command {
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
   private final Timer timer = new Timer();
   private Command defaultCommand;
-
+  private double _timeout;
   public AlignToNote() {
     addRequirements(swerve);
-
+    _timeout = 20;
   }
-
+  public AlignToNote(double timeout) {
+    addRequirements(swerve);
+    _timeout = timeout;
+  }
   @Override
   public void initialize() {
 
@@ -55,7 +56,7 @@ public class AlignToNote extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;//timer.get() >= 2;
+    return timer.get() >= _timeout;
   }
 
   @Override
