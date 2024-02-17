@@ -13,22 +13,19 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  while (Serial.available() > 0) {
-
+  if (Serial.available() > 0) {
+    String str = Serial.readStringUntil('\n');
     // look for the next valid integer in the incoming serial stream:
-    int red = Serial.parseInt();
+    Serial.println(str);
+    int red = (int)str.substring(0,3).toInt();
     // do it again:
-    int green = Serial.parseInt();
+    int green = (int)str.substring(3,6).toInt();
     // do it again:
-    int blue = Serial.parseInt();
+    int blue = (int)str.substring(6,9).toInt();
 
-    // look for the newline. That's the end of your sentence:
-    if (Serial.read() == '\n') {
-      // constrain the values to 0 - 255 and invert
-      // if you're using a common-cathode LED, just use "constrain(color, 0, 255);"
-      red = 255 - constrain(red, 0, 255);
-      green = 255 - constrain(green, 0, 255);
-      blue = 255 - constrain(blue, 0, 255);
+      red = constrain(red, 0, 255);
+      green = constrain(green, 0, 255);
+      blue = constrain(blue, 0, 255);
 
       // fade the red, green, and blue legs of the LED:
       analogWrite(ledR, red);
@@ -39,7 +36,7 @@ void loop() {
       Serial.print(red, HEX);
       Serial.print(green, HEX);
       Serial.println(blue, HEX);
-    }
+    
   }
 
 }

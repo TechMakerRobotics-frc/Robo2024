@@ -13,7 +13,6 @@ public class LEDSSubsystem extends SubsystemBase {
   SerialPort arduino = null;
   double timeoutColor = 0;
   private int r,g,b;
-
   public LEDSSubsystem() {
     try{
       arduino = new SerialPort(115200,SerialPort.Port.kUSB);
@@ -58,6 +57,6 @@ public void setLedTeamColor(){
   }
   @Override
   public void periodic() {
-  arduino.writeString(String.format("|%3i%3i%3i\n", r,g,b)); 
+  arduino.writeString(String.format("%3i%3i%3i\n", r,g,b)); 
   }
 }
