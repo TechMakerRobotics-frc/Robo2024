@@ -18,7 +18,7 @@ public final class Limelight {
     private static final double HEIGHT_OF_CAMERA = 21.5; // centimeters
     private static final double ANGLE_OF_CAMERA = 30; // Degrees
 
-    public static void StartLimelight() {
+    public static void startLimelight() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             setPipeline(LimelightConstants.SPEAKER_RED_PIPELINE);
         } else {

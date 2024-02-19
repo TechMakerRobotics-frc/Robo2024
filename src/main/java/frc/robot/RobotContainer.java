@@ -53,7 +53,7 @@ public class RobotContainer {
 
     // Configura os botões do Xbox.
     void configureBindings() {
-        Limelight.StartLimelight();
+        Limelight.startLimelight();
         // Controle do piloto
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverController.a().onTrue(new InstantCommand(drivebase::lock));
