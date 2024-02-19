@@ -1,13 +1,7 @@
 package frc.robot.commands.swervedrive.drivebase;
 
-import frc.robot.Constants;
-import frc.robot.Constants.OperatorConstants;
 // import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveSubsystem;
-
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,7 +38,7 @@ public class PIDTurnToAngle extends Command {
         s_Swerve.drive(
             new Translation2d(0, 0), 
             rotationVal * 4, 
-            true
+            false
         );
     }
 

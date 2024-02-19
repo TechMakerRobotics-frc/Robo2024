@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.Auto4Notes;
 import frc.robot.commands.Auto.HeadingTest;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
@@ -26,6 +25,7 @@ import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
+import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -89,7 +89,7 @@ public class RobotContainer {
                 .onFalse(new StopClaw());
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
-        driverController.b().onTrue(new HeadingTest());
+        driverController.b().onTrue(new PIDTurnToAngle(90));
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

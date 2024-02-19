@@ -10,6 +10,8 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -21,6 +23,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -55,7 +58,8 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public        double      maximumSpeed = 3;
  
-
+  SwerveDrivePoseEstimator pose = null;
+  Field2d field = new Field2d();
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -91,7 +95,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
-
+    
   }
 
   /**
@@ -336,12 +340,8 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    if(Limelight.hasTargets()){
-      SmartDashboard.putString("POSE",Limelight.getBotPose2d().toString());
-      
-    }
-    SmartDashboard.putData(swerveDrive.field);
-    SmartDashboard.putString("POSE BOT",getPose().toString());
+    
+    
   }
 
   @Override

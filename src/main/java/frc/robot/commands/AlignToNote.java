@@ -19,6 +19,7 @@ import frc.robot.util.PhotonVisionNote;
 public class AlignToNote extends Command {
 
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
+  
   private final Timer timer = new Timer();
   private Command defaultCommand;
   private double _timeout;

@@ -16,8 +16,9 @@ public final class Constants {
 
     public static final class Auto {
 
-        public static final double VX_STAGE_kP = 0.16;
-        public static final double VY_STAGE_kP = 0.13;
+        public static final double VY_STAGE_kP = 0.6;
+        public static final double VY_STAGE_ki = 0.0;
+        public static final double VY_STAGE_kd = 0.0;
         public static final double MAX_ERROR_DEG_TX_STAGE = 0.5;
         public static final double MAX_ERROR_DEG_TY_STAGE = 0.5;
         public static final double VERTICAL_DEG_STAGE = 10;
@@ -66,7 +67,7 @@ public final class Constants {
         public static final int SPEAKER_BLUE_PIPELINE = 0;
         public static final int SPEAKER_RED_PIPELINE = 1;
         public static final int POSE_PIPELINE = 2;
-        public static final double SPEAKER_DISTANCE_TO_SHOOT = 230;
+        public static final double SPEAKER_DISTANCE_TO_SHOOT = 2.30;
       }
       public static class VisionConstants{
       

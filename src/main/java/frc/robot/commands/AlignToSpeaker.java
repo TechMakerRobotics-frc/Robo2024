@@ -15,8 +15,7 @@ import frc.robot.Constants.Auto;
 import frc.robot.Constants.LimelightConstants;
 
 public class AlignToSpeaker extends Command {
-  private static PIDController vxStageController = new PIDController(Auto.VX_STAGE_kP, 0, 0);
-  private static PIDController vyStageController = new PIDController(Auto.VY_STAGE_kP, 0, 0);
+  private static PIDController vyStageController = new PIDController(Auto.VY_STAGE_kP, Auto.VY_STAGE_ki, Auto.VY_STAGE_kd);
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
   private final Timer timer = new Timer();
   private double _timeout;
@@ -24,24 +23,20 @@ public class AlignToSpeaker extends Command {
 
   public AlignToSpeaker(double timeout) {
     addRequirements(swerve);
-    vxStageController.setTolerance(Auto.MAX_ERROR_DEG_TX_STAGE);
-    vyStageController.setTolerance(Auto.MAX_ERROR_DEG_TY_STAGE);
-    vxStageController.setSetpoint(0);
-    vyStageController.setSetpoint(Auto.VERTICAL_DEG_STAGE);
+    
+    
+    vyStageController.setSetpoint(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT);
     _timeout = timeout;
   }
   public AlignToSpeaker() {
     addRequirements(swerve);
-    vxStageController.setTolerance(Auto.MAX_ERROR_DEG_TX_STAGE);
-    vyStageController.setTolerance(Auto.MAX_ERROR_DEG_TY_STAGE);
-    vxStageController.setSetpoint(0);
-    vyStageController.setSetpoint(Auto.VERTICAL_DEG_STAGE);
+    
+    vyStageController.setSetpoint(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT);
     _timeout = 20;
   }
   @Override
   public void initialize() {
     Limelight.startLimelight() ;
-    vxStageController.reset();
     vyStageController.reset();
     timer.reset();
     timer.start();
@@ -52,11 +47,12 @@ public class AlignToSpeaker extends Command {
   @Override
   public void execute() {
     if (Limelight.atSpeaker()) {
+      SmartDashboard.putData(vyStageController);
       double vo = -Limelight.getTx()/50;
-      double vy = -(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT-Limelight.getCentimetersFromTarget())/50;
-      SmartDashboard.putNumber("Tx", vo);
-      SmartDashboard.putNumber("Distance", Limelight.getCentimetersFromTarget());
-      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(vy,0, vo, swerve.getHeading()));
+      double vy = vyStageController.calculate(Limelight.getCentimetersFromTarget()/100.0); 
+      SmartDashboard.putNumber("Angular", vo);
+      SmartDashboard.putNumber("X", vy);
+      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
 
     }
   }
