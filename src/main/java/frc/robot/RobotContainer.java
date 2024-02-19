@@ -89,7 +89,7 @@ public class RobotContainer {
                 .onFalse(new StopClaw());
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
-        driverController.b().onTrue(new Auto4Notes());
+        driverController.b().onTrue(new HeadingTest());
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
