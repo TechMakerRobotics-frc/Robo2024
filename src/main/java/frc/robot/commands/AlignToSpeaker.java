@@ -40,7 +40,7 @@ public class AlignToSpeaker extends Command {
   }
   @Override
   public void initialize() {
-    Limelight.StartLimelight();
+    Limelight.startLimelight() ;
     vxStageController.reset();
     vyStageController.reset();
     timer.reset();
