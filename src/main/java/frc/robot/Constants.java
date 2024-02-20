@@ -68,6 +68,10 @@ public final class Constants {
         public static final int SPEAKER_RED_PIPELINE = 1;
         public static final int POSE_PIPELINE = 2;
         public static final double SPEAKER_DISTANCE_TO_SHOOT = 2.30;
+        public static final double kLimelightHeight = 0.2;
+        public static final double kLimelightPanningAngle = 30;
+
+
       }
       public static class VisionConstants{
       

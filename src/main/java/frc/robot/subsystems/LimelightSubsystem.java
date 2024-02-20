@@ -8,18 +8,19 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.util.LimelightHelper;
 import frc.robot.util.RollingAverage;
 
-public class LimelightFront extends SubsystemBase {
-    private static LimelightFront limelightFront;
+public class LimelightSubsystem extends SubsystemBase {
+    private static LimelightSubsystem limelightFront;
 
     private RollingAverage txAverage, tyAverage, taAverage, xAverage;
     private boolean cube;
 
     private String limelightName = "limelight-front";
 
-    public LimelightFront() {
+    public LimelightSubsystem() {
         txAverage = new RollingAverage();
         tyAverage = new RollingAverage();
         taAverage = new RollingAverage();
@@ -27,9 +28,9 @@ public class LimelightFront extends SubsystemBase {
         setPipeline(2);
     }
 
-    public static LimelightFront getInstance() {
+    public static LimelightSubsystem getInstance() {
         if (limelightFront == null) {
-            limelightFront = new LimelightFront();
+            limelightFront = new LimelightSubsystem();
         }
         return limelightFront;
     }

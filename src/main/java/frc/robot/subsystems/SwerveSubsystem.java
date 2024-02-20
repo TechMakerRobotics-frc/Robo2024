@@ -44,7 +44,6 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import frc.robot.Constants.Drivebase;
-import frc.robot.util.Limelight;
 public class SwerveSubsystem extends SubsystemBase
 {
 
@@ -57,9 +56,7 @@ public class SwerveSubsystem extends SubsystemBase
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
   public        double      maximumSpeed = 3;
- 
-  SwerveDrivePoseEstimator pose = null;
-  Field2d field = new Field2d();
+  LimelightSubsystem limelight = LimelightSubsystem.getInstance();
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -95,7 +92,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
-    
+  
   }
 
   /**
@@ -341,7 +338,8 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     
-    
+    limelight.checkForAprilTagUpdates(swerveDrive.swerveDrivePoseEstimator);
+
   }
 
   @Override
