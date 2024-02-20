@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.Constants.Auto;
+import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.LimelightConstants;
 
 public class AlignToSpeaker extends Command {
-  private static PIDController vyStageController = new PIDController(Auto.VY_STAGE_kP, Auto.VY_STAGE_ki, Auto.VY_STAGE_kd);
+  private static PIDController vyStageController = new PIDController(AlignConstants.kvyStageP,AlignConstants.kvyStageI,AlignConstants.kvyStageD);
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
   private final Timer timer = new Timer();
   private double _timeout;
@@ -24,15 +24,13 @@ public class AlignToSpeaker extends Command {
 
   public AlignToSpeaker(double timeout) {
     addRequirements(swerve);
-    
-    
-    vyStageController.setSetpoint(LimelightConstants.kDistanceFromSpeakerToShoot);
+    vyStageController.setSetpoint(AlignConstants.kDistanceFromSpeakerToShoot);
     _timeout = timeout;
   }
   public AlignToSpeaker() {
     addRequirements(swerve);
     
-    vyStageController.setSetpoint(LimelightConstants.kDistanceFromSpeakerToShoot);
+    vyStageController.setSetpoint(AlignConstants.kDistanceFromSpeakerToShoot);
     _timeout = 20;
   }
   @Override

@@ -11,7 +11,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,12 +22,10 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
-import frc.robot.Constants.Auto;
+import frc.robot.Constants.AutonomousConstants;
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import org.photonvision.PhotonCamera;
@@ -43,7 +40,7 @@ import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
-import frc.robot.Constants.Drivebase;
+import frc.robot.Constants.DriveConstants;
 public class SwerveSubsystem extends SubsystemBase
 {
 
@@ -81,7 +78,7 @@ public class SwerveSubsystem extends SubsystemBase
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
     try
     {
-      swerveDrive = new SwerveParser(new File(Filesystem.getDeployDirectory(),  Drivebase.kSwerveDirectory)).createSwerveDrive(Drivebase.kmaximumSpeed);
+      swerveDrive = new SwerveParser(new File(Filesystem.getDeployDirectory(),  DriveConstants.kSwerveDirectory)).createSwerveDrive(DriveConstants.kmaximumSpeed);
       // Alternative method if you don't want to supply the conversion factor via JSON files.
       // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
     } catch (Exception e)
@@ -102,7 +99,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg,Drivebase.kmaximumSpeed);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg,DriveConstants.kmaximumSpeed);
   }
   public static SwerveSubsystem getInstance(){
     if(instance==null){
@@ -121,9 +118,9 @@ public class SwerveSubsystem extends SubsystemBase
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         Auto.kTranslationPID,
+                                         AutonomousConstants.kTranslationPID,
                                          // Translation PID constants
-                                         Auto.kAnglePID,
+                                         AutonomousConstants.kAnglePID,
                                          // Rotation PID constants
                                          4.5,
                                          // Max module speed, in m/s
@@ -446,7 +443,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         headingX,
                                                         headingY,
                                                         getHeading().getRadians(),
-                                                        Drivebase.kmaximumSpeed);
+                                                        DriveConstants.kmaximumSpeed);
   }
 
   /**
@@ -466,7 +463,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         yInput,
                                                         angle.getRadians(),
                                                         getHeading().getRadians(),
-                                                        Drivebase.kmaximumSpeed);
+                                                        DriveConstants.kmaximumSpeed);
   }
 
   /**

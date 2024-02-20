@@ -6,13 +6,8 @@ import com.pathplanner.lib.util.PIDConstants;
 public final class Constants {
 
 
-    public static final class Auto {
+    public static final class AutonomousConstants {
 
-        public static final double VY_STAGE_kP = 0.6;
-        public static final double VY_STAGE_ki = 0.0;
-        public static final double VY_STAGE_kd = 0.0;
-
-        
         public static final PIDConstants kTranslationPID = new PIDConstants(0.7, 0, 0);
         public static final PIDConstants kAnglePID   = new PIDConstants(0.4, 0, 0.01);  
 
@@ -23,11 +18,23 @@ public final class Constants {
         public static final double kiH = 0.000007;
         public static final double kdH = 0;
 
+    }
+    public static final class AlignConstants {
+        public static final double kvyStageP = 0.6;
+        public static final double kvyStageI = 0.0;
+        public static final double kvyStageD = 0.0;
+        public static final double kDistanceFromSpeakerToShoot = 2.30;
 
-    
+        public static final double kvyNoteP = 0.6;
+        public static final double kvyNoteI = 0.0;
+        public static final double kvyNoteD = 0.0;
+        public static final double kMaxPitch = 18;
+
+
+        
     }
 
-    public static final class Drivebase {
+    public static final class DriveConstants {
         public static final String kSwerveDirectory = "swerve";
         public static final double kmaximumSpeed = 3;
 
@@ -38,7 +45,6 @@ public final class Constants {
         public static final int kBlueSpeakerPipeline = 0;
         public static final int kRedSpeakerPipeline = 1;
         public static final int kPosePipeline = 2;
-        public static final double kDistanceFromSpeakerToShoot = 2.30;
         public static final double kLimelightHeight = 0.2;
         public static final double kLimelightPanningAngle = 30;
 
@@ -46,7 +52,6 @@ public final class Constants {
       }
       public static class VisionConstants{
       
-        public static final double kMaxPitch = 18;
         public static final int kIDAmpBlue = 6;
         public static final int kIDAmpRed = 5;
       }
