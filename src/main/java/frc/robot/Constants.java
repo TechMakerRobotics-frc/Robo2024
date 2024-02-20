@@ -3,6 +3,8 @@ package frc.robot;
 
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.math.util.Units;
+
 public final class Constants {
 
 
@@ -33,7 +35,23 @@ public final class Constants {
 
         
     }
-
+    public static final class HeadingConstants {
+        // The gyro should be CCW positive
+        public static final boolean kGyroReversed = true;
+    
+        // This is used for making the robot face a certain direction
+        public static final double kHeadingP = 0.05;
+        public static final double kHeadingI = 0;
+        public static final double kHeadingD = 0.001;
+        public static final double kHeadingMaxOutput = 0.5; // Percent
+        public static final double kHeadingTolerance = 1; // Degrees
+    
+        public static final double kTranslationP = 5;
+        public static final double kTranslationI = 0;
+        public static final double kTranslationD = 0;
+        public static final double kTranslationMaxOutput = 0.5; // Percent
+        public static final double kTranslationTolerance = 0.2; // Meters
+      }
     public static final class DriveConstants {
         public static final String kSwerveDirectory = "swerve";
         public static final double kmaximumSpeed = 3;

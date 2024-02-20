@@ -1,5 +1,6 @@
 package frc.robot.util;
 
+import edu.wpi.first.math.MathUtil;
 /**
  * Contains a series of useful mathematical functions.
  *
@@ -7,7 +8,7 @@ package frc.robot.util;
  * @author Angela Jia
  * @version 10/16/18
  */
-public final class MathUtil {
+public final class MathUtils {
   /**
    * Linearly maps a value currently within a given range to another range.
    *
@@ -48,4 +49,8 @@ public final class MathUtil {
   public static boolean compareSetpoint(double measurement, double setpoint, double error) {
     return Math.abs(setpoint - measurement) <= error;
   }
+  public static double angleConstrain(double degrees){
+    return MathUtil.inputModulus(degrees, -180, 180);
+}
+
 }
