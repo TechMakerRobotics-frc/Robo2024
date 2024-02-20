@@ -16,9 +16,8 @@ public class LimelightSubsystem extends SubsystemBase {
     private static LimelightSubsystem limelightFront;
 
     private RollingAverage txAverage, tyAverage, taAverage, xAverage;
-    private boolean cube;
 
-    private String limelightName = "limelight-front";
+    private String limelightName = "limelight";
 
     public LimelightSubsystem() {
         txAverage = new RollingAverage();
@@ -34,7 +33,13 @@ public class LimelightSubsystem extends SubsystemBase {
         }
         return limelightFront;
     }
-
+    public void startLimelight() {
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            setPipeline(LimelightConstants.SPEAKER_RED_PIPELINE);
+        } else {
+            setPipeline(LimelightConstants.SPEAKER_BLUE_PIPELINE);
+        }
+    }
     @Override
     public void periodic() {
         updateRollingAverages();
@@ -136,20 +141,9 @@ public class LimelightSubsystem extends SubsystemBase {
         return LimelightHelper.getNumberOfAprilTagsSeen(limelightName);
     }
 
-    public boolean getCube(){
-        return cube;
-    }
 
     public boolean hasTarget() {
         return getTv();
-    }
-
-    public boolean targetIsCone() {
-        return hasTarget() && getNeuralClassID() == 2;
-    }
-
-    public boolean targetIsCube() {
-        return hasTarget() && getNeuralClassID() == 1;
     }
 
     public void updateRollingAverages() {
@@ -202,4 +196,19 @@ public class LimelightSubsystem extends SubsystemBase {
     public int getClosestColumn(Translation2d pose, boolean isCube){
         return LimelightHelper.getClosestColumn(pose, isCube);
     }    
+
+    public boolean atSpeaker() {
+        if (hasTarget()) {
+            if (DriverStation.getAlliance().get() == Alliance.Red) {
+                setPipeline(LimelightConstants.SPEAKER_RED_PIPELINE);
+                return getTargetID() == LimelightConstants.ID_SPEAKER_RED;
+            } else {
+                setPipeline(LimelightConstants.SPEAKER_BLUE_PIPELINE);
+                return getTargetID() == LimelightConstants.ID_SPEAKER_BLUE;
+            }
+        }
+        return false;
+    }
+
+
 }

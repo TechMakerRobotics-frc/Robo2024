@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.HeadingTest;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -29,7 +28,6 @@ import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.util.Limelight;
 
 public class RobotContainer {
     private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
@@ -39,7 +37,6 @@ public class RobotContainer {
     XboxController xbox = new XboxController(0);
     Trigger twoBumper = new Trigger(
             () -> (driverController.getRawAxis(2) > 0.85 && driverController.getRawAxis(3) > 0.85));
-    Trigger hasTarget = new Trigger(()->Limelight.hasTargets());
     Command driveFieldOrientedAnglularVelocity;
 
     public RobotContainer() {
@@ -53,7 +50,6 @@ public class RobotContainer {
 
     // Configura os botões do Xbox.
     void configureBindings() {
-        Limelight.startLimelight();
         // Controle do piloto
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverController.a().onTrue(new InstantCommand(drivebase::lock));

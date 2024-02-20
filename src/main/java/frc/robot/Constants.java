@@ -58,8 +58,8 @@ public final class Constants {
     }
     public static class LimelightConstants{
         public static final double MAX_ERROR_VISION_POSE = 1.0; // meters
-        public static final int[] ID_SPEAKER_BLUE = {7, 7};
-        public static final int[] ID_SPEAKER_RED = {3, 3};
+        public static final int ID_SPEAKER_BLUE = 7;
+        public static final int ID_SPEAKER_RED = 3;
         public static final int ID_AMP_BLUE = 6;
         public static final int ID_AMP_RED = 5;
         public static final int[] ID_STAGE_BLUE = {14, 15, 16};

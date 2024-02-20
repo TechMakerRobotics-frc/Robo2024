@@ -9,8 +9,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.util.Limelight;
 import frc.robot.Constants.Auto;
 import frc.robot.Constants.LimelightConstants;
 
@@ -20,6 +20,7 @@ public class AlignToSpeaker extends Command {
   private final Timer timer = new Timer();
   private double _timeout;
   private Command defaultCommand;
+  private LimelightSubsystem limelight = LimelightSubsystem.getInstance();
 
   public AlignToSpeaker(double timeout) {
     addRequirements(swerve);
@@ -36,7 +37,7 @@ public class AlignToSpeaker extends Command {
   }
   @Override
   public void initialize() {
-    Limelight.startLimelight() ;
+    limelight.startLimelight() ;
     vyStageController.reset();
     timer.reset();
     timer.start();
@@ -46,10 +47,10 @@ public class AlignToSpeaker extends Command {
 
   @Override
   public void execute() {
-    if (Limelight.atSpeaker()) {
+    if (limelight.atSpeaker()) {
       SmartDashboard.putData(vyStageController);
-      double vo = -Limelight.getTx()/50;
-      double vy = vyStageController.calculate(Limelight.getCentimetersFromTarget()/100.0); 
+      double vo = -limelight.getTx()/50;
+      double vy = vyStageController.calculate(limelight.getDistance()); 
       SmartDashboard.putNumber("Angular", vo);
       SmartDashboard.putNumber("X", vy);
       swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
@@ -65,8 +66,8 @@ public class AlignToSpeaker extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    Limelight.setPipeline(LimelightConstants.POSE_PIPELINE);
-        swerve.resetOdometry(Limelight.getBotPose2d());
+    limelight.setPipeline(LimelightConstants.POSE_PIPELINE);
+        swerve.resetOdometry(limelight.getBotpose());
     swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
