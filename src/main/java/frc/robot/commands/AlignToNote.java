@@ -55,7 +55,7 @@ public class AlignToNote extends Command {
       PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
 
       double vo = -PhotonVisionNote.getYaw(t)/ 20;
-      double vy = -(PhotonVisionNote.getPitch(t)+VisionConstants.MAX_PITCH )/ 20;
+      double vy = -(PhotonVisionNote.getPitch(t)+VisionConstants.kMaxPitch )/ 20;
       PhotonVisionNote.printToDashboard();
       //swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy, 0, vo, swerve.getHeading()));
       swerve.drive(new Translation2d( vy,0),vo,false);

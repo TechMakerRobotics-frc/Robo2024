@@ -26,13 +26,13 @@ public class AlignToSpeaker extends Command {
     addRequirements(swerve);
     
     
-    vyStageController.setSetpoint(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT);
+    vyStageController.setSetpoint(LimelightConstants.kDistanceFromSpeakerToShoot);
     _timeout = timeout;
   }
   public AlignToSpeaker() {
     addRequirements(swerve);
     
-    vyStageController.setSetpoint(LimelightConstants.SPEAKER_DISTANCE_TO_SHOOT);
+    vyStageController.setSetpoint(LimelightConstants.kDistanceFromSpeakerToShoot);
     _timeout = 20;
   }
   @Override
@@ -66,7 +66,7 @@ public class AlignToSpeaker extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    limelight.setPipeline(LimelightConstants.POSE_PIPELINE);
+    limelight.setPipeline(LimelightConstants.kPosePipeline);
         swerve.resetOdometry(limelight.getBotpose());
     swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());

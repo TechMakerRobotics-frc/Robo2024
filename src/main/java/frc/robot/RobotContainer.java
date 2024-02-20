@@ -42,8 +42,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-                () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-                () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+                () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.kLeftYDeadBand),
+                () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.kLeftXDeadBand),
                 () -> (driverController.getRawAxis(2) - driverController.getRawAxis(3)));
 
     }

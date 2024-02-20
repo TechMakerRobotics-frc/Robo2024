@@ -55,7 +55,6 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = 3;
   LimelightSubsystem limelight = LimelightSubsystem.getInstance();
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -82,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
     try
     {
-      swerveDrive = new SwerveParser(new File(Filesystem.getDeployDirectory(),  Drivebase.SWERVE_DIRECTORY)).createSwerveDrive(maximumSpeed);
+      swerveDrive = new SwerveParser(new File(Filesystem.getDeployDirectory(),  Drivebase.kSwerveDirectory)).createSwerveDrive(Drivebase.kmaximumSpeed);
       // Alternative method if you don't want to supply the conversion factor via JSON files.
       // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
     } catch (Exception e)
@@ -103,7 +102,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, maximumSpeed);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg,Drivebase.kmaximumSpeed);
   }
   public static SwerveSubsystem getInstance(){
     if(instance==null){
@@ -122,9 +121,9 @@ public class SwerveSubsystem extends SubsystemBase
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         Auto.TRANSLATION_PID,
+                                         Auto.kTranslationPID,
                                          // Translation PID constants
-                                         Auto.ANGLE_PID,
+                                         Auto.kAnglePID,
                                          // Rotation PID constants
                                          4.5,
                                          // Max module speed, in m/s
@@ -447,7 +446,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         headingX,
                                                         headingY,
                                                         getHeading().getRadians(),
-                                                        maximumSpeed);
+                                                        Drivebase.kmaximumSpeed);
   }
 
   /**
@@ -467,7 +466,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         yInput,
                                                         angle.getRadians(),
                                                         getHeading().getRadians(),
-                                                        maximumSpeed);
+                                                        Drivebase.kmaximumSpeed);
   }
 
   /**

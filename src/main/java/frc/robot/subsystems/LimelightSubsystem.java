@@ -35,9 +35,9 @@ public class LimelightSubsystem extends SubsystemBase {
     }
     public void startLimelight() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            setPipeline(LimelightConstants.SPEAKER_RED_PIPELINE);
+            setPipeline(LimelightConstants.kRedSpeakerPipeline);
         } else {
-            setPipeline(LimelightConstants.SPEAKER_BLUE_PIPELINE);
+            setPipeline(LimelightConstants.kBlueSpeakerPipeline);
         }
     }
     @Override
@@ -200,11 +200,11 @@ public class LimelightSubsystem extends SubsystemBase {
     public boolean atSpeaker() {
         if (hasTarget()) {
             if (DriverStation.getAlliance().get() == Alliance.Red) {
-                setPipeline(LimelightConstants.SPEAKER_RED_PIPELINE);
-                return getTargetID() == LimelightConstants.ID_SPEAKER_RED;
+                setPipeline(LimelightConstants.kRedSpeakerPipeline);
+                return getTargetID() == LimelightConstants.kIDSpeakerRed;
             } else {
-                setPipeline(LimelightConstants.SPEAKER_BLUE_PIPELINE);
-                return getTargetID() == LimelightConstants.ID_SPEAKER_BLUE;
+                setPipeline(LimelightConstants.kBlueSpeakerPipeline);
+                return getTargetID() == LimelightConstants.kIDSpeakerBlue;
             }
         }
         return false;
