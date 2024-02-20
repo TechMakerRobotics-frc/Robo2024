@@ -9,3 +9,10 @@ https://github.com/TeraViks/Thor_2023/blob/main/src/main/java/frc/robot/TunableC
 https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-robot-localization
 
 https://docs.photonvision.org/en/latest/docs/programming/photonlib/robot-pose-estimator.html
+https://www.chiefdelphi.com/t/coding-for-apriltag-ids-with-a-limelight/454178
+https://github.com/RoboLancers/FRC427-Main-2024/tree/main/src/main/java/frc/robot/subsystems
+https://github.com/Armada2508/Crescendo/blob/main/src/main/java/frc/robot/subsystems/VisionSubsystem.java
+https://github.com/Monsters-308/FRC2024_308/blob/main/src/main/java/frc/robot/subsystems/VisionSubsystem.java
+https://github.com/Pantherbotics/FRC-2024-Crescendo/blob/main/src/main/java/frc/robot/subsystems/Vision.java
+https://github.com/2BDetermined-7034/2024-Crescendo/blob/master/src/main/java/frc/robot/subsystems/vision/Limelight.java
+https://github.com/nerdherd/Crescendo2024/blob/main/src/main/java/frc/robot/commands/TurnToAngle.java
