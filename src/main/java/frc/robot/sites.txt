@@ -1,0 +1,11 @@
+https://github.com/PeddieRobotics/2023Hraesvelgr/blob/dev/2023-H/src/main/java/frc/robot/commands/DriveCommands/RotateToAngle.java
+
+https://github.com/PeddieRobotics/2023Hraesvelgr/blob/dev/2023-H/src/main/java/frc/robot/subsystems/LimelightFront.java
+
+https://github.com/FRC1884/season2024/blob/main/src/main/java/frc/robot/subsystems/Vision/Pose.java
+
+https://github.com/TeraViks/Thor_2023/blob/main/src/main/java/frc/robot/TunableConstant.java
+
+https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-robot-localization
+
+https://docs.photonvision.org/en/latest/docs/programming/photonlib/robot-pose-estimator.html

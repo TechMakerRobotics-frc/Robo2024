@@ -7,11 +7,14 @@ package frc.robot.commands;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.TunableConstant;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Limelight;
 import frc.robot.util.PhotonVisionNote;
@@ -19,7 +22,14 @@ import frc.robot.util.PhotonVisionNote;
 public class AlignToNote extends Command {
 
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
-  
+
+/* private TunableConstant targetVelocityCoefficient = new TunableConstant("kTargetCoefficient", VisionConstants.kTargetCoefficient);
+  private TunableConstant maxAngularSpeed = new TunableConstant("Max Angular Speed", DriveConstants.kMaxAngularSpeedRadiansPerSecond);
+  private TunableConstant maxAngularAcceleration = new TunableConstant("Max Angular Acceleration", DriveConstants.kMaxAngularAccelerationRadiansPerSecondSquared);
+  private TunableConstant p = new TunableConstant("kP", SwerveModuleConstants.kTurningPID.p());
+  private TunableConstant i = new TunableConstant("kI", SwerveModuleConstants.kTurningPID.i());
+  private TunableConstant d = new TunableConstant("kD", SwerveModuleConstants.kTurningPID.d());*/
+
   private final Timer timer = new Timer();
   private Command defaultCommand;
   private double _timeout;
@@ -54,7 +64,15 @@ public class AlignToNote extends Command {
 
     }
   }
+ /*private void updateConstants() {
+    if (maxAngularSpeed.hasChanged() || maxAngularAcceleration.hasChanged()) {
+      thetaController.setConstraints(new TrapezoidProfile.Constraints(maxAngularSpeed.get(), maxAngularAcceleration.get()));
+    }
 
+    if (p.hasChanged() || i.hasChanged() || d.hasChanged()) {
+      thetaController.setPID(p.get(), i.get(), d.get());
+    }
+  }*/
   @Override
   public boolean isFinished() {
     return timer.get() >= _timeout;
