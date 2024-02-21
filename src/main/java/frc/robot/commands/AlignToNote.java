@@ -26,13 +26,13 @@ public class AlignToNote extends Command {
   private final Timer timer = new Timer();
   private Command defaultCommand;
   private double _timeout;
-  public AlignToNote() {
-    addRequirements(swerve);
-    _timeout = 20;
-  }
+  
   public AlignToNote(double timeout) {
     addRequirements(swerve);
     _timeout = timeout;
+  }
+  public AlignToNote() {
+    this(20.0);    
   }
   @Override
   public void initialize() {
@@ -53,7 +53,7 @@ public class AlignToNote extends Command {
       double vo = -PhotonVisionNote.getYaw(t)/ 20;
       double vy = vyNoteController.calculate(PhotonVisionNote.getPitch(t));
       PhotonVisionNote.printToDashboard();
-      swerve.drive(new Translation2d( -vy,0),vo,false);
+      swerve.drive(new Translation2d( vy,0),vo,false);
 
     }
   }

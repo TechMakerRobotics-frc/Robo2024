@@ -16,3 +16,6 @@ https://github.com/Monsters-308/FRC2024_308/blob/main/src/main/java/frc/robot/su
 https://github.com/Pantherbotics/FRC-2024-Crescendo/blob/main/src/main/java/frc/robot/subsystems/Vision.java
 https://github.com/2BDetermined-7034/2024-Crescendo/blob/master/src/main/java/frc/robot/subsystems/vision/Limelight.java
 https://github.com/nerdherd/Crescendo2024/blob/main/src/main/java/frc/robot/commands/TurnToAngle.java
+
+21/02/2024
+https://github.com/Monsters-308/FRC2024_308/blob/main/src/main/java/frc/robot/commands/drive/AutoAim.java

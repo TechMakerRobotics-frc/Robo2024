@@ -28,10 +28,7 @@ public class AlignToSpeaker extends Command {
     _timeout = timeout;
   }
   public AlignToSpeaker() {
-    addRequirements(swerve);
-    
-    vyStageController.setSetpoint(AlignConstants.kDistanceFromSpeakerToShoot);
-    _timeout = 20;
+    this(20);
   }
   @Override
   public void initialize() {
@@ -51,7 +48,7 @@ public class AlignToSpeaker extends Command {
       double vy = vyStageController.calculate(limelight.getDistance()); 
       SmartDashboard.putNumber("Angular", vo);
       SmartDashboard.putNumber("X", vy);
-      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
+      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(vy,0, vo, swerve.getHeading()));
 
     }
   }
