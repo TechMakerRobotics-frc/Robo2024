@@ -65,7 +65,6 @@ public class AlignToNote extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
   }

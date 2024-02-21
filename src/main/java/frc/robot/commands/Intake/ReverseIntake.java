@@ -19,4 +19,4 @@ public class ReverseIntake extends InstantCommand {
         intake.setMotorPower(IntakeConstants.kReversePower);
     }
   }
-    
+

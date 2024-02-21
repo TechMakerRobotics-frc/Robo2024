@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
+import frc.robot.commands.Auto.Auto5Notes;
+import frc.robot.commands.Auto.MoveTest;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -53,6 +55,10 @@ public class RobotContainer {
         // Controle do piloto
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverController.a().onTrue(new InstantCommand(drivebase::lock));
+        driverController.leftBumper().whileTrue(new AlignToSpeaker());
+        driverController.rightBumper().whileTrue(new AlignToNote());
+        driverController.b().onTrue(new PIDTurnToAngle(90));
+        driverController.x().onTrue(new MoveTest());
 
         // Controle do operador:
        
@@ -70,11 +76,11 @@ public class RobotContainer {
                 .onTrue(new ReverseIntake())
                 .onFalse(new StopIntake());
 
-        operatorController.povUp()
-                .onTrue(new UpElevator());
+        //operatorController.povUp()
+          //      .onTrue(new UpElevator());
                 //.onFalse(new StopElevator());
-        operatorController.povDown()
-                .onTrue(new DownElevator());
+        //operatorController.povDown()
+         //       .onTrue(new DownElevator());
                 //.onFalse(new StopElevator());
         operatorController.back().onTrue(new StopElevator());
         operatorController.povRight()
@@ -83,9 +89,7 @@ public class RobotContainer {
         operatorController.povLeft()
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
-        driverController.leftBumper().whileTrue(new AlignToSpeaker());
-        driverController.rightBumper().whileTrue(new AlignToNote());
-        driverController.b().onTrue(new PIDTurnToAngle(90));
+        
 
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))

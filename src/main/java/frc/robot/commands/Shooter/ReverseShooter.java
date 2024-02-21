@@ -9,17 +9,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ReverseShooter extends InstantCommand {
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   private final ShooterSubsystem shooter = ShooterSubsystem.getInstance();
-  public ReverseShooter() {
-
-    addRequirements(intake);
-    addRequirements(shooter);
-
-    
-  }
 
   @Override
   public void initialize() {
-    shooter.setMotorPower(ShooterConstants.kReversePower);
-    intake.setMotorPower(IntakeConstants.kReversePower);
+      addRequirements(intake);
+      addRequirements(shooter);
+  }
+  
+  @Override
+  public void execute() {
+      intake.setMotorPower(IntakeConstants.kReversePower);
+      shooter.setMotorPower(ShooterConstants.kReversePower);
   }
 }
+    
+
