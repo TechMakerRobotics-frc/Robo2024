@@ -41,7 +41,7 @@ public class AlignToNote extends Command {
     timer.start();
     defaultCommand = swerve.getDefaultCommand();
     swerve.removeDefaultCommand();
-    vyNoteController.setSetpoint(-AlignConstants.kMaxPitch);
+    vyNoteController.setSetpoint(AlignConstants.kMaxPitch);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class AlignToNote extends Command {
     PhotonPipelineResult p = PhotonVisionNote.getLatestPipeline();
     if (PhotonVisionNote.hasTarget(p)) {
       PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
-      SmartDashboard.putData(vyNoteController);
+      SmartDashboard.putData("PID NOTE",vyNoteController);
       double vo = -PhotonVisionNote.getYaw(t)/ 20;
       double vy = vyNoteController.calculate(PhotonVisionNote.getPitch(t));
       PhotonVisionNote.printToDashboard();

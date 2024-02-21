@@ -43,13 +43,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
   public void setMotorPower(double forward) {
-    if(forward<ShooterConstants.kMinimalPower)
-    {
-      forward = ShooterConstants.kMinimalPower;
-    }
+  
       motorUp.set(forward);
       motorDown.set(forward);
-      motorPower = forward;
     
   }
   @Override

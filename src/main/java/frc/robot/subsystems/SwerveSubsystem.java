@@ -334,7 +334,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     
-    limelight.checkForAprilTagUpdates(swerveDrive.swerveDrivePoseEstimator);
+    //limelight.checkForAprilTagUpdates(swerveDrive.swerveDrivePoseEstimator);
 
   }
 

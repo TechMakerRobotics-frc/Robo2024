@@ -132,8 +132,15 @@ public class LimelightSubsystem extends SubsystemBase {
             // a2 = additional angle to target
             // tan(a1 + a2) = h/d
             // d = h/tan(a1+a2)
-            return (LimelightConstants.kLimelightHeight) /
-                    (Math.tan(Math.toRadians(LimelightConstants.kLimelightPanningAngle + getTy())));
+            double a2 = getTy();
+            double a1 = LimelightConstants.kLimelightPanningAngle;
+            double h1 = LimelightConstants.kLimelightHeight;
+            double h2 = 1.4511; // Place holder Height of target
+
+            double angleToGoal = (a1 + a2);
+            double angleToGoalRadian = Math.toRadians(angleToGoal);
+          
+            return (h2 - h1) / Math.tan(angleToGoalRadian);
         }
     }
 

@@ -43,12 +43,13 @@ public class AlignToSpeaker extends Command {
   @Override
   public void execute() {
     if (limelight.atSpeaker()) {
-      SmartDashboard.putData(vyStageController);
+      SmartDashboard.putData("PID SPEAKER",vyStageController);
       double vo = -limelight.getTx()/50;
       double vy = vyStageController.calculate(limelight.getDistance()); 
       SmartDashboard.putNumber("Angular", vo);
       SmartDashboard.putNumber("X", vy);
-      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(vy,0, vo, swerve.getHeading()));
+      SmartDashboard.putNumber("Distance", limelight.getDistance());
+      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
 
     }
   }

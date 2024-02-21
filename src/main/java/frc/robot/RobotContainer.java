@@ -39,11 +39,11 @@ public class RobotContainer {
     XboxController xbox = new XboxController(0);
     Trigger twoBumper = new Trigger(
             () -> (driverController.getRawAxis(2) > 0.85 && driverController.getRawAxis(3) > 0.85));
-    Command driveFieldOrientedAnglularVelocity;
+    Command driveFieldOrientedAngularVelocity;
 
     public RobotContainer() {
 
-        driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
+        driveFieldOrientedAngularVelocity = drivebase.driveCommand(
                 () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.kLeftYDeadBand),
                 () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.kLeftXDeadBand),
                 () -> (driverController.getRawAxis(2) - driverController.getRawAxis(3)));
@@ -67,15 +67,12 @@ public class RobotContainer {
                 .onFalse(new StopShooter());
 
         operatorController.y().onTrue(new IntakeSensor());
-
         operatorController.a()
                 .onTrue(new ReverseShooter())
                 .onFalse(new StopShooter());
-
         operatorController.b()
                 .onTrue(new ReverseIntake())
                 .onFalse(new StopIntake());
-
         //operatorController.povUp()
           //      .onTrue(new UpElevator());
                 //.onFalse(new StopElevator());
@@ -90,17 +87,15 @@ public class RobotContainer {
                 .onTrue(new OutsideClaw())
                 .onFalse(new StopClaw());
         
-
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
 
-        drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+        drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
 
     }
 
     public Command getAutonomousCommand() {
-
         return null;
         //return drivebase.getAutonomousCommand("3 notes blue");
     }
