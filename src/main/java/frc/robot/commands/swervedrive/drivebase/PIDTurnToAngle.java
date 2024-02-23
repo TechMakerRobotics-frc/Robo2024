@@ -31,7 +31,7 @@ public class PIDTurnToAngle extends Command {
     @Override
     public void execute() {
         // elevatorHeight = RobotContainer.elevator.getCurrentPosition();
-        // currentAngle = s_Swerve.getGyroYaw().getDegrees() + 180;
+        currentAngle = s_Swerve.getGyroYaw().getDegrees();
         rotationVal = angleController.calculate(currentAngle, targetAngle);
         
         /* Drive */
