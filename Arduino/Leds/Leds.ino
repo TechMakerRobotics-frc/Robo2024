@@ -1,6 +1,6 @@
-int ledR = 6;
-int ledG = 5;
-int ledB = 3;  
+int ledR = 11;
+int ledG = 10;
+int ledB = 9;  
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -32,11 +32,6 @@ void loop() {
       analogWrite(ledG, green);
       analogWrite(ledB, blue);
 
-      // print the three numbers in one string as hexadecimal:
-      Serial.print(red, HEX);
-      Serial.print(green, HEX);
-      Serial.println(blue, HEX);
-    
   }
 
 }

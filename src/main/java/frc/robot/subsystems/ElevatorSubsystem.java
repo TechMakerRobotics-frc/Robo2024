@@ -20,11 +20,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   CANSparkMax  motorRight = new CANSparkMax (ElevatorConstants.kElevatorRightMotor,MotorType.kBrushless);
   
   //dois encoders, um de cada motor
-  RelativeEncoder leftEncoder;
-  RelativeEncoder rightEncoder;
-  DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
-  DigitalInput optical = new DigitalInput(3);
-  AnalogInput distance = new AnalogInput(0);
+ // RelativeEncoder leftEncoder;
+  //RelativeEncoder rightEncoder;
+  //DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
+  //DigitalInput optical = new DigitalInput(3);
+  //AnalogInput distance = new AnalogInput(0);
   /** Creates a new arm. */
   public ElevatorSubsystem() {
     
@@ -41,10 +41,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     motorRight.setInverted(false);
 
     //Associo os encoders, seto a razão de 1 volta e zero os mesmos
-    leftEncoder = motorLeft.getEncoder();
-    rightEncoder = motorRight.getEncoder();
+    //leftEncoder = motorLeft.getEncoder();
+    //rightEncoder = motorRight.getEncoder();
   
-    resetEncoder();
+   // resetEncoder();
     //setMotorPower(ElevatorConstants.kPowerDown);
     
   }
@@ -57,39 +57,34 @@ public class ElevatorSubsystem extends SubsystemBase {
   //Função principal que movimenta o braço para frente(+) e  para tras(-)
   public void setMotorPower(double power) {
     SmartDashboard.putNumber("Elevator Potencia (%)", power * 100.0);
-    extending = power>0;
+   // extending = power>0;
     motorRight.set(power);
     motorLeft.set(power);
   }
 
   //Reseta os valores dos encoders, para ter a referencia atual
   public void resetEncoder(){
-    leftEncoder.setPosition(0);
-    rightEncoder.setPosition(0);
+   // leftEncoder.setPosition(0);
+   // rightEncoder.setPosition(0);
   }
   
   //Função  que captura  os encoders, fazendo uma media dos dois lados e dividindo pela redução
-  public double getEncoder(){
-    return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));
-  }
-  public boolean getLimiSwitch(){
-    return !limiSwitch.get();
-  }
+  //public double getEncoder(){
+ //   return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));}
+  //public boolean getLimiSwitch(){
+   // return !limiSwitch.get();
+  //}
   
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Encoder", getEncoder());
+    //SmartDashboard.putNumber("Elevator Encoder", getEncoder());
 
-    SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
-    if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getLimiSwitch())){
-      motorRight.set(0);
-      motorLeft.set(0);
+    //SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
+    //if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getLimiSwitch())){
+      //motorRight.set(0);
+      //motorLeft.set(0);
     }
-    if(getLimiSwitch()){
-      resetEncoder();
-    }    
+    //if(getLimiSwitch()){
+     // resetEncoder();
+}    
    
-  }
-
-
-}

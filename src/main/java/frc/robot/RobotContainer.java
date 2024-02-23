@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.Auto5Notes;
 import frc.robot.commands.Auto.MoveTest;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
@@ -22,13 +21,14 @@ import frc.robot.commands.Claw.StopClaw;
 import frc.robot.commands.Elevator.DownElevator;
 import frc.robot.commands.Elevator.StopElevator;
 import frc.robot.commands.Elevator.UpElevator;
-import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
+import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
+import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer {
@@ -58,7 +58,6 @@ public class RobotContainer {
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
         driverController.b().onTrue(new PIDTurnToAngle(90));
-        driverController.x().onTrue(new MoveTest());
 
         // Controle do operador:
        
@@ -66,19 +65,20 @@ public class RobotContainer {
                 .onTrue(new StartShooter())
                 .onFalse(new StopShooter());
 
-        operatorController.y().onTrue(new IntakeSensor());
+        operatorController.y().onTrue(new StartIntake())
+                              .onFalse(new StopIntake());
         operatorController.a()
                 .onTrue(new ReverseShooter())
                 .onFalse(new StopShooter());
         operatorController.b()
                 .onTrue(new ReverseIntake())
                 .onFalse(new StopIntake());
-        //operatorController.povUp()
-          //      .onTrue(new UpElevator());
-                //.onFalse(new StopElevator());
-        //operatorController.povDown()
-         //       .onTrue(new DownElevator());
-                //.onFalse(new StopElevator());
+        operatorController.povUp()
+                .onTrue(new UpElevator())
+                .onFalse(new StopElevator());
+        operatorController.povDown()
+                .onTrue(new DownElevator())
+                .onFalse(new StopElevator());
         operatorController.back().onTrue(new StopElevator());
         operatorController.povRight()
                 .onTrue(new InsideClaw())

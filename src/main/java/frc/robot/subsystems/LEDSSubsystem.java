@@ -29,7 +29,8 @@ public class LEDSSubsystem extends SubsystemBase {
           System.out.println(e2);
         }
       }
-    } 
+    }
+    setLedTeamColor(); 
   }
 public void setLedTeamColor(){
     if(arduino != null){
@@ -57,6 +58,7 @@ public void setLedTeamColor(){
   }
   @Override
   public void periodic() {
-  arduino.writeString(String.format("%3i%3i%3i\n", r,g,b)); 
+       arduino.writeString(String.format("%03d%03d%03d\n",b,g,r));
+
   }
 }

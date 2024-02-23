@@ -5,12 +5,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClawConstants;
 
 public class ClawSubsystem extends SubsystemBase {
   private static ClawSubsystem instance;
+  DigitalInput sensor = new DigitalInput(ClawConstants.kClawSensor);
   boolean extended = false;
 
   CANSparkMax  motor = new CANSparkMax(ClawConstants.kClawMotor,MotorType.kBrushless);
@@ -21,6 +23,10 @@ public class ClawSubsystem extends SubsystemBase {
 
     //Configuro para  que o  motor se mantenha estatico quando em 0
     motor.setIdleMode(IdleMode.kCoast);
+  }
+
+  public boolean getSensor(){
+    return !(sensor.get());
   }
 
   public static ClawSubsystem getInstance() {
