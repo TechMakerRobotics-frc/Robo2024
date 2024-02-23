@@ -14,7 +14,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private static IntakeSubsystem instance;
   DigitalInput sensorLeft = new DigitalInput(IntakeConstants.kIntakeSensorLeft);
-  DigitalInput sensorRight = new DigitalInput(IntakeConstants.kIntakeSensorRight);
   // Motor ta ai
   CANSparkMax  motor = new CANSparkMax(IntakeConstants.kIntakeMotor,MotorType.kBrushless);
   
@@ -39,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
     return instance;
 }
 public boolean getSensor(){
-  return !(sensorLeft.get() && sensorRight.get());
+  return !(sensorLeft.get());
 }
 
 public void setMotorPower(double forward) {

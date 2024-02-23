@@ -60,7 +60,6 @@ public class RobotContainer {
         driverController.b().onTrue(new PIDTurnToAngle(90));
 
         // Controle do operador:
-       
         operatorController.x()
                 .onTrue(new StartShooter())
                 .onFalse(new StopShooter());
