@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.HeadingConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.MathUtils;
@@ -31,7 +32,8 @@ public class RobotGotoFieldPos extends Command {
     private boolean m_complete = false;
 
     private final Pose2d m_desiredRobotoPos;
-
+    private final Timer timer = new Timer();
+    private double _timeout = 20;
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
      */
@@ -54,6 +56,10 @@ public class RobotGotoFieldPos extends Command {
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle) {
         this(new Pose2d(xPosition, yPosition, new Rotation2d(angle)));
     }
+    public RobotGotoFieldPos(double xPosition, double yPosition, double angle,double timeout){
+        this(new Pose2d(xPosition, yPosition, new Rotation2d(angle)));
+        _timeout = timeout;
+    }
 
     /*
      * This function is called once when the command is schedueled.
@@ -72,6 +78,8 @@ public class RobotGotoFieldPos extends Command {
         pidControllerX.setSetpoint(m_desiredRobotoPos.getX());
         pidControllerY.setSetpoint(m_desiredRobotoPos.getY());
         pidControllerAngle.setSetpoint(MathUtils.angleConstrain(m_desiredRobotoPos.getRotation().getDegrees()));
+        timer.reset();
+        timer.start();
     }
 
     /*
@@ -98,6 +106,10 @@ public class RobotGotoFieldPos extends Command {
         if(pidControllerX.atSetpoint() && pidControllerY.atSetpoint() && pidControllerAngle.atSetpoint()){
             m_complete = true;
         }
+        if(timer.get()>=_timeout){
+            m_complete = true;
+        }
+        
     }
 
     /*

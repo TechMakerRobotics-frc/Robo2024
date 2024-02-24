@@ -33,8 +33,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     motorRight.restoreFactoryDefaults();
 
     //Configuro para  que o  motor se mantenha estatico quando em 0
-    motorLeft.setIdleMode(IdleMode.kCoast);
-    motorRight.setIdleMode(IdleMode.kCoast);
+    motorLeft.setIdleMode(IdleMode.kBrake);
+    motorRight.setIdleMode(IdleMode.kBrake);
     
     //Inverto o motor da esquerda para que girem juntos
     motorLeft.setInverted(true);
@@ -79,7 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     //SmartDashboard.putNumber("Elevator Encoder", getEncoder());
 
-    //SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
+    SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
     //if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getLimiSwitch())){
       //motorRight.set(0);
       //motorLeft.set(0);

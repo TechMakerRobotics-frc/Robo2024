@@ -28,8 +28,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants.AutonomousConstants;
 import java.io.File;
 import java.util.function.DoubleSupplier;
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
@@ -52,7 +50,6 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  LimelightSubsystem limelight = LimelightSubsystem.getInstance();
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -88,8 +85,6 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
-    swerveDrive.getGyro().setInverted(false);
-  
   }
 
   /**
@@ -315,7 +310,8 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   {
     
-    //limelight.checkForAprilTagUpdates(swerveDrive.swerveDrivePoseEstimator);
+   
+    
 
   }
 

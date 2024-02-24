@@ -17,9 +17,9 @@ public class Auto5Notes extends SequentialCommandGroup {
 
     addCommands(
       new MoveXYHeading(-1, 0, 0),
-      new AlignToSpeaker(),
-      new AlignToNote(),
-      new AlignToSpeaker()
+      new AlignToSpeaker(5),
+      new AlignToNote(5),
+      new AlignToSpeaker(5)
       /*
       new MoveXYHeading(0, 1, 0),
       new StartIntake(),

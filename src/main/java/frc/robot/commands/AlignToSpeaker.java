@@ -59,14 +59,14 @@ public class AlignToSpeaker extends Command {
       swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
       if(vyStageController.atSetpoint()){
         intake.setMotorPower(IntakeConstants.kPowerShoot);
-        _timeout = 0;
+        
       }
     }
   }
 
   @Override
   public boolean isFinished() {
-    return timer.get() >= _timeout;
+    return (timer.get() >= _timeout || intake.getSensor()==false);
   }
 
   @Override

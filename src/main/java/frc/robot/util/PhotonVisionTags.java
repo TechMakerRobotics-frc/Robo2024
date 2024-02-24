@@ -34,7 +34,10 @@ public class PhotonVisionTags{
     public static boolean hasTarget(PhotonPipelineResult result) {
         return result.hasTargets();
     }
-
+    public static boolean hasTarget() {
+        PhotonPipelineResult result = getLatestPipeline();
+        return result.hasTargets();
+    }
     public static List<PhotonTrackedTarget> getTargets(PhotonPipelineResult result) {
         return result.getTargets();
     }

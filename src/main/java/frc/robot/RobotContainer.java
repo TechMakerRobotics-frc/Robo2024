@@ -34,6 +34,7 @@ import frc.robot.commands.Intake.ReverseIntake;
 import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
+import frc.robot.commands.swervedrive.RobotGotoFieldPos;
 import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
@@ -70,7 +71,7 @@ public class RobotContainer {
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
         //driverController.x().onTrue(new AlignToAmp());
-        driverController.b().onTrue(new PIDTurnToAngle(90));
+        driverController.b().onTrue(new RobotGotoFieldPos(3,1,90,5));
 
         // Controle do operador:
         operatorController.x()
