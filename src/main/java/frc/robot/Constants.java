@@ -127,8 +127,8 @@ public final class Constants {
         public static final int kElevatorLeftMotor = 19;
         public static final int kElevatorRightMotor = 20;
         public static final int kLimitSwitch = 2;
-        public static final double kPowerDown = -1;
-        public static final double kPowerUp = 1;
+        public static final double kPowerDown = -0.75;
+        public static final double kPowerUp = 0.75;
         public static final double kEncoderTicksTop = 200;
     }
 
