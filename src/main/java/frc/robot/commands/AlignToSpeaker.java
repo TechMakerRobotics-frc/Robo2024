@@ -9,10 +9,14 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.Constants.AlignConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class AlignToSpeaker extends Command {
   private static PIDController vyStageController = new PIDController(AlignConstants.kvyStageP,AlignConstants.kvyStageI,AlignConstants.kvyStageD);
@@ -21,9 +25,11 @@ public class AlignToSpeaker extends Command {
   private double _timeout;
   private Command defaultCommand;
   private LimelightSubsystem limelight = LimelightSubsystem.getInstance();
+  private ShooterSubsystem shooter = ShooterSubsystem.getInstance();
+  private IntakeSubsystem intake = IntakeSubsystem.getInstance();
 
   public AlignToSpeaker(double timeout) {
-    addRequirements(swerve);
+    addRequirements(swerve,intake,shooter);
     vyStageController.setSetpoint(AlignConstants.kDistanceFromSpeakerToShoot);
     _timeout = timeout;
   }
@@ -38,6 +44,7 @@ public class AlignToSpeaker extends Command {
     timer.start();
     defaultCommand = swerve.getDefaultCommand();
     swerve.removeDefaultCommand();
+    shooter.setMotorPower(ShooterConstants.kPower);
   }
 
   @Override
@@ -50,7 +57,9 @@ public class AlignToSpeaker extends Command {
       SmartDashboard.putNumber("X", vy);
       SmartDashboard.putNumber("Distance", limelight.getDistance());
       swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
-
+      if(vyStageController.atSetpoint()){
+        intake.setMotorPower(IntakeConstants.kPowerShoot);
+      }
     }
   }
 
@@ -61,9 +70,11 @@ public class AlignToSpeaker extends Command {
 
   @Override
   public void end(boolean interrupted) {
+    intake.setMotorPower(0);
+    shooter.setMotorPower(0);
 
     limelight.setPipeline(LimelightConstants.kPosePipeline);
-        swerve.resetOdometry(limelight.getBotpose());
+    swerve.resetOdometry(limelight.getBotpose());
     swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);

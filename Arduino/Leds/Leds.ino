@@ -1,13 +1,11 @@
-int ledR = 11;
-int ledG = 10;
-int ledB = 9;  
+int ledR = 3;
+int ledG = 5;
+int ledB = 6;  
 
 // the setup routine runs once when you press reset:
 void setup() {
   // declare pin 9 to be an output:
-  pinMode(ledR, OUTPUT);
-  pinMode(ledG, OUTPUT);
-  pinMode(ledB, OUTPUT);
+
   Serial.begin(115200);
 }
 

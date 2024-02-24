@@ -16,32 +16,12 @@ public class Auto5Notes extends SequentialCommandGroup {
   public Auto5Notes() {
 
     addCommands(
-      new MoveXYHeading(1, 0, 0),
-      new AlignToSpeaker(),
-      new StartShooter(),
-      new WaitCommand(1),
-      new StopShooter(),
-      new MoveXYHeading(0, 0, -45),
-      new StartIntake(),
-      new AlignToNote(),
-      new MoveXYHeading(1, 0, 0),
-      new IntakeSensor(),
       new MoveXYHeading(-1, 0, 0),
       new AlignToSpeaker(),
-      new StartShooter(),
-      new WaitCommand(1),
-      new StopShooter(),
-      new MoveXYHeading(0, 0, -45),
-      new StartIntake(),
-      new AlignToNote(),
-      new MoveXYHeading(1, 0, 0),
-      new IntakeSensor(),
       new MoveXYHeading(-1, 0, 0),
-      new AlignToSpeaker(),
-      new StartShooter(),
-      new WaitCommand(1),
-      new StopShooter(),
-      new MoveXYHeading(0, 0, 90),
+      new AlignToNote(),
+      new AlignToSpeaker()
+      /*
       new MoveXYHeading(0, 1, 0),
       new StartIntake(),
       new AlignToNote(),
@@ -64,7 +44,7 @@ public class Auto5Notes extends SequentialCommandGroup {
       new AlignToSpeaker(),
       new StartShooter(),
       new WaitCommand(1),
-      new StopShooter()
+      new StopShooter()*/
       );
   }
 }

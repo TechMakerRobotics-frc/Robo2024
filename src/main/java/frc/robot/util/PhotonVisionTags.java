@@ -11,6 +11,8 @@ import edu.wpi.first.math.geometry.Transform3d;
 //import edu.wpi.first.networktables.NetworkTable;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.VisionConstants;
 
 public class PhotonVisionTags{
     //private NetworkTableInstance instance = NetworkTableInstance.getDefault();
@@ -19,6 +21,7 @@ public class PhotonVisionTags{
     static PhotonCamera  camera = new PhotonCamera("Apriltags");
 
     // Have to use the same pipeline result each time you want to gather data.
+    
     // Gets the processed data from the camera
     public static PhotonPipelineResult getLatestPipeline() {
         return camera.getLatestResult();
@@ -49,6 +52,8 @@ public class PhotonVisionTags{
     public static double getPitch(PhotonTrackedTarget target) {
         return target.getPitch();
     }
+
+    
 
     // The area (how much of the camera feed the bounding box takes up) as a percent
     // (0-100)

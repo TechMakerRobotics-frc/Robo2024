@@ -9,76 +9,73 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.AlignConstants;
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.PhotonVisionNote;
+import frc.robot.util.PhotonVisionTags;
+import frc.robot.Constants.AlignConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.ShooterConstants;
 
-public class AlignToNote extends Command {
-
+public class AlignToAmp extends Command {
+  private static PIDController vyAmpController = new PIDController(AlignConstants.kvyAmpP,AlignConstants.kvyAmpI,AlignConstants.kvyAmpD);
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
-  private static PIDController vyNoteController = new PIDController(AlignConstants.kvyNoteP,AlignConstants.kvyNoteI,AlignConstants.kvyNoteD);
-  private static IntakeSubsystem intake = IntakeSubsystem.getInstance();
-
   private final Timer timer = new Timer();
-  private Command defaultCommand;
   private double _timeout;
-  
-  public AlignToNote(double timeout) {
-    addRequirements(swerve, intake);
+  private Command defaultCommand;
+
+  public AlignToAmp(double timeout) {
+    addRequirements(swerve);
+    vyAmpController.setSetpoint(AlignConstants.kTargetArea);
     _timeout = timeout;
   }
-  public AlignToNote() {
-    this(20.0);    
+  public AlignToAmp() {
+    this(20);
   }
+  
   @Override
   public void initialize() {
-    vyNoteController.reset();
+    vyAmpController.reset();
     timer.reset();
     timer.start();
     defaultCommand = swerve.getDefaultCommand();
     swerve.removeDefaultCommand();
-    vyNoteController.setSetpoint(AlignConstants.kMaxPitch);
-    
   }
 
   @Override
   public void execute() {
-     if(intake.getSensor()){
-        intake.setMotorPower(0);
-      }
-      else{
-        intake.setMotorPower(IntakeConstants.kPower);
-      }
     PhotonPipelineResult p = PhotonVisionNote.getLatestPipeline();
     
-    if (PhotonVisionNote.hasTarget(p)) {
-      PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
-      SmartDashboard.putData("PID NOTE",vyNoteController);
-      double vo = -PhotonVisionNote.getYaw(t)/ 20;
-      double vy = vyNoteController.calculate(PhotonVisionNote.getPitch(t));
-      swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy,0, vo, new Rotation2d()));
-     
-      
-
+    if (PhotonVisionTags.hasTarget(p)) {
+      PhotonTrackedTarget t = PhotonVisionTags.getBestTarget(p);
+      SmartDashboard.putData("PID AMP",vyAmpController);
+      double vo = PhotonVisionTags.getPitch(t)/50;
+      double vy = vyAmpController.calculate(PhotonVisionTags.getArea(t)); 
+      SmartDashboard.putNumber("Angular", vo);
+      SmartDashboard.putNumber("X", vy);
+      SmartDashboard.putNumber("Distance", PhotonVisionTags.getArea(t));
+      swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
+      if(vyAmpController.atSetpoint()){
+      }
     }
   }
 
   @Override
   public boolean isFinished() {
-    return (timer.get() >= _timeout );
+    return timer.get() >= _timeout;
   }
 
   @Override
   public void end(boolean interrupted) {
-    intake.setMotorPower(0);
+
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
   }

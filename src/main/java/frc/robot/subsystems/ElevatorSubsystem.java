@@ -22,7 +22,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   //dois encoders, um de cada motor
  // RelativeEncoder leftEncoder;
   //RelativeEncoder rightEncoder;
-  //DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
+  DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
   //DigitalInput optical = new DigitalInput(3);
   //AnalogInput distance = new AnalogInput(0);
   /** Creates a new arm. */
@@ -33,8 +33,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     motorRight.restoreFactoryDefaults();
 
     //Configuro para  que o  motor se mantenha estatico quando em 0
-    motorLeft.setIdleMode(IdleMode.kBrake);
-    motorRight.setIdleMode(IdleMode.kBrake);
+    motorLeft.setIdleMode(IdleMode.kCoast);
+    motorRight.setIdleMode(IdleMode.kCoast);
     
     //Inverto o motor da esquerda para que girem juntos
     motorLeft.setInverted(true);
@@ -71,9 +71,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   //Função  que captura  os encoders, fazendo uma media dos dois lados e dividindo pela redução
   //public double getEncoder(){
  //   return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));}
-  //public boolean getLimiSwitch(){
-   // return !limiSwitch.get();
-  //}
+  public boolean getLimiSwitch(){
+    return !limiSwitch.get();
+  }
   
   @Override
   public void periodic() {

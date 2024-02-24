@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSSubsystem extends SubsystemBase {
   SerialPort arduino = null;
+  static LEDSSubsystem instance = null;
   double timeoutColor = 0;
   private int r,g,b;
   public LEDSSubsystem() {
@@ -18,10 +19,12 @@ public class LEDSSubsystem extends SubsystemBase {
       arduino = new SerialPort(115200,SerialPort.Port.kUSB);
     }
     catch (Exception e){
+      System.out.println(e);
       try{
         arduino = new SerialPort(115200,SerialPort.Port.kUSB1);
       }
       catch (Exception e1){
+        System.out.println(e1);
         try{
         arduino = new SerialPort(115200,SerialPort.Port.kUSB2);
         }
@@ -32,6 +35,12 @@ public class LEDSSubsystem extends SubsystemBase {
     }
     setLedTeamColor(); 
   }
+public static LEDSSubsystem getInstance(){
+  if(instance==null){
+    instance = new LEDSSubsystem();
+  }
+  return instance;
+}
 public void setLedTeamColor(){
     if(arduino != null){
         if(DriverStation.isAutonomous()){
@@ -58,7 +67,13 @@ public void setLedTeamColor(){
   }
   @Override
   public void periodic() {
-       arduino.writeString(String.format("%03d%03d%03d\n",b,g,r));
+     try{
+        arduino.writeString(String.format("%03d%03d%03d\n",b,g,r));
+      }
+      catch (Exception e1){
+        System.out.println(e1);
+
+    }
 
   }
 }
