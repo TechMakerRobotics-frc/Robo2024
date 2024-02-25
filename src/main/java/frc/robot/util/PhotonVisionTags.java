@@ -11,8 +11,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 //import edu.wpi.first.networktables.NetworkTable;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.LimelightConstants;
-import frc.robot.Constants.VisionConstants;
+
 
 public class PhotonVisionTags{
     //private NetworkTableInstance instance = NetworkTableInstance.getDefault();

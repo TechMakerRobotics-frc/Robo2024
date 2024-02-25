@@ -75,8 +75,6 @@ public class AlignToSpeaker extends Command {
     shooter.setMotorPower(0);
 
     limelight.setPipeline(LimelightConstants.kPosePipeline);
-    swerve.resetOdometry(limelight.getBotpose());
-    swerve.zeroGyro();
     swerve.drive(new ChassisSpeeds());
     swerve.setDefaultCommand(defaultCommand);
   }

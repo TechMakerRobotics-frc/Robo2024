@@ -179,18 +179,18 @@ public class LimelightSubsystem extends SubsystemBase {
         return LimelightHelper.getJSONDump(limelightName);
     }
 
-    public void checkForAprilTagUpdates(SwerveDrivePoseEstimator odometry) {
+    /*public void checkForAprilTagUpdates(SwerveDrivePoseEstimator odometry) {
         int tagsSeen = LimelightHelper.getNumberOfAprilTagsSeen(limelightName);
         if (tagsSeen > 1 && this.getBotpose().relativeTo(odometry.getEstimatedPosition()).getTranslation().getNorm() < 0.5) {
             odometry.addVisionMeasurement(this.getBotpose(), Timer.getFPGATimestamp());
         }
-    }
+    }*/
 
-    public void forceAprilTagLocalization(SwerveDrivePoseEstimator odometry){
+    /*public void forceAprilTagLocalization(SwerveDrivePoseEstimator odometry){
         if(getTv()){
             odometry.addVisionMeasurement(this.getBotpose(), Timer.getFPGATimestamp());
         }
-    }
+    }*/
 
     // public Translation2d getCurrentAprilTag() { // gets the april tag the limelight is currently seeing
     //     return LimelightHelper.getAprilTagCoordinates((int) getTargetID()); // this isn't the closest, it's just the one we're seeing

@@ -10,13 +10,14 @@ import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Shooter.StartShooter;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.swervedrive.MoveXYHeading;
+import frc.robot.commands.swervedrive.RobotGotoFieldPos;
 
 public class Auto5Notes extends SequentialCommandGroup {
 
   public Auto5Notes() {
 
     addCommands(
-      new MoveXYHeading(-1, 0, 0),
+      new RobotGotoFieldPos(-1, 0, 0,2),
       new AlignToSpeaker(5),
       new AlignToNote(5),
       new AlignToSpeaker(5)

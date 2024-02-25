@@ -37,7 +37,6 @@ public class MoveXYHeading extends Command {
 
   @Override
   public void initialize() {
-    swerve.resetOdometry(new Pose2d());
     swerve.zeroGyro();
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorX = 0;

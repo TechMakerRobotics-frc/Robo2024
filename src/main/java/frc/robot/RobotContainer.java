@@ -71,7 +71,7 @@ public class RobotContainer {
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
         //driverController.x().onTrue(new AlignToAmp());
-        driverController.b().onTrue(new RobotGotoFieldPos(3,1,90,5));
+        driverController.b().onTrue(new RobotGotoFieldPos(0,0,0));
 
         // Controle do operador:
         operatorController.x()
