@@ -1,26 +1,40 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.PosesConstants;
 import frc.robot.commands.AlignToNote;
+import frc.robot.commands.AlignToNoteSensor;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Intake.IntakeSensor;
-import frc.robot.commands.Intake.StartIntake;
-import frc.robot.commands.Shooter.StartShooter;
-import frc.robot.commands.Shooter.StopShooter;
-import frc.robot.commands.swervedrive.MoveXYHeading;
+
 import frc.robot.commands.swervedrive.RobotGotoFieldPos;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class Auto5Notes extends SequentialCommandGroup {
 
   public Auto5Notes() {
-
+    SwerveSubsystem.getInstance().resetOdometry(PosesConstants.atSpeakerMiddle);
+    SwerveSubsystem.getInstance().zeroGyro();
     addCommands(
-      new RobotGotoFieldPos(-1, 0, 0,2),
+
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),
+      new AlignToSpeaker(3),
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter.getX()+0.5,PosesConstants.atSpeakerShooter.getY(),0,1),
+      new AlignToNoteSensor(3),
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),
       new AlignToSpeaker(5),
-      new AlignToNote(5),
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter.getX(),PosesConstants.atSpeakerShooter.getY(),-90,2),
+      new AlignToNoteSensor(3),
+            new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),
+
+      new AlignToSpeaker(5),
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter.getX(),PosesConstants.atSpeakerShooter.getY(),90,2),
+      new AlignToNoteSensor(3),
+      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),
+
       new AlignToSpeaker(5)
+
       /*
       new MoveXYHeading(0, 1, 0),
       new StartIntake(),

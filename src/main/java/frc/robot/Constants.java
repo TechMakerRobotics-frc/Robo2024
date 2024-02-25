@@ -3,6 +3,9 @@ package frc.robot;
 
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -52,7 +55,7 @@ public final class Constants {
         public static final boolean kGyroReversed = true;
     
         // This is used for making the robot face a certain direction
-        public static final double kHeadingP = 0.05;
+        public static final double kHeadingP = 0.1;
         public static final double kHeadingI = 0;
         public static final double kHeadingD = 0.001;
         public static final double kHeadingMaxOutput = 0.5; // Percent
@@ -120,6 +123,7 @@ public final class Constants {
         public static final double kWaitBeforeShoot = 1.5;
         public static final double kRampRate = 0.5;
         public static final double kMinimalPower = 0;
+        public static final double kRPMtoShoot = 4000;
     }
 
     public static class ElevatorConstants {
@@ -137,5 +141,13 @@ public final class Constants {
         public static final int kClawMotor = 18;
         public static final double kpowerInside = 0.5;
         public static final double kpowerOutside = -0.3;
+    }
+
+    public static class PosesConstants{
+        public static final Pose2d atSpeakerMiddle = new Pose2d(new Translation2d(-1.15, -1.97),new Rotation2d());
+        public static final Pose2d atSpeakerLeft = new Pose2d(new Translation2d(-1.15, -3.25),new Rotation2d());
+        public static final Pose2d atSpeakerRight = new Pose2d(new Translation2d(-1.15, -0.76),new Rotation2d());
+        public static final Pose2d atSpeakerShooter = new Pose2d(new Translation2d(-2.29, -2.17),new Rotation2d());
+        public static final Pose2d atAmp = new Pose2d(new Translation2d(-1.51, -4.18),new Rotation2d(3.14));
     }
 }

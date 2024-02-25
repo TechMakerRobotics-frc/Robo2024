@@ -49,15 +49,19 @@ public class RobotGotoFieldPos extends Command {
 
         addRequirements(drive);
     }
+    public RobotGotoFieldPos(Pose2d desiredRobotoPos, double timeout) {
 
+        this(desiredRobotoPos);
+        _timeout = timeout;
+    }
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
      */
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle) {
-        this(new Pose2d(xPosition, yPosition, new Rotation2d(angle)));
+        this(new Pose2d(xPosition, yPosition, new Rotation2d(Math.toRadians(angle))));
     }
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle,double timeout){
-        this(new Pose2d(xPosition, yPosition, new Rotation2d(angle)));
+        this(new Pose2d(xPosition, yPosition, new Rotation2d(Math.toRadians(angle))));
         _timeout = timeout;
     }
 

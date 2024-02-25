@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PosesConstants;
 //import frc.robot.commands.AlignToAmp;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
@@ -67,11 +68,14 @@ public class RobotContainer {
     void configureBindings() {
         // Controle do piloto
         driverController.povRight().onTrue(new InstantCommand(drivebase::zeroGyro));
-        driverController.a().onTrue(new InstantCommand(drivebase::lock));
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
         //driverController.x().onTrue(new AlignToAmp());
-        driverController.b().onTrue(new RobotGotoFieldPos(0,0,0));
+        driverController.b().whileTrue(new RobotGotoFieldPos(PosesConstants.atSpeakerMiddle));
+        driverController.a().whileTrue(new RobotGotoFieldPos(PosesConstants.atAmp));
+        driverController.x().whileTrue(new RobotGotoFieldPos(PosesConstants.atSpeakerShooter));
+
+
 
         // Controle do operador:
         operatorController.x()

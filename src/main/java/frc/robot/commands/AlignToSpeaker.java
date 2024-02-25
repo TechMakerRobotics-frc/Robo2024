@@ -31,6 +31,7 @@ public class AlignToSpeaker extends Command {
   public AlignToSpeaker(double timeout) {
     addRequirements(swerve,intake,shooter);
     vyStageController.setSetpoint(AlignConstants.kDistanceFromSpeakerToShoot);
+    vyStageController.setTolerance(0.3);
     _timeout = timeout;
   }
   public AlignToSpeaker() {
@@ -58,7 +59,9 @@ public class AlignToSpeaker extends Command {
       SmartDashboard.putNumber("Distance", limelight.getDistance());
       swerve.drive(ChassisSpeeds.fromFieldRelativeSpeeds(-vy,0, vo, swerve.getHeading()));
       if(vyStageController.atSetpoint()){
-        intake.setMotorPower(IntakeConstants.kPowerShoot);
+        if(shooter.getRPM()>=ShooterConstants.kRPMtoShoot){
+          intake.setMotorPower(IntakeConstants.kPowerShoot);
+        }
         
       }
     }
