@@ -11,7 +11,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.HeadingConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.MathUtils;
@@ -31,13 +32,13 @@ public class RobotGotoFieldPos extends Command {
                                                                   HeadingConstants.kHeadingD);
     private boolean m_complete = false;
 
-    private final Pose2d m_desiredRobotoPos;
-    private final Timer timer = new Timer();
-    private double _timeout = 20;
+    private Pose2d m_desiredRobotoPos = null;
+
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
      */
     public RobotGotoFieldPos(Pose2d desiredRobotoPos) {
+
 
         m_desiredRobotoPos = desiredRobotoPos;
 
@@ -48,11 +49,14 @@ public class RobotGotoFieldPos extends Command {
         pidControllerAngle.enableContinuousInput(-180, 180);
 
         addRequirements(drive);
+        
+
     }
+  
     public RobotGotoFieldPos(Pose2d desiredRobotoPos, double timeout) {
 
         this(desiredRobotoPos);
-        _timeout = timeout;
+        withTimeout(timeout);
     }
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
@@ -62,7 +66,7 @@ public class RobotGotoFieldPos extends Command {
     }
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle,double timeout){
         this(new Pose2d(xPosition, yPosition, new Rotation2d(Math.toRadians(angle))));
-        _timeout = timeout;
+        withTimeout(timeout);
     }
 
     /*
@@ -74,16 +78,13 @@ public class RobotGotoFieldPos extends Command {
     // When not overridden, this function is blank.
     @Override
     public void initialize() {
+        SmartDashboard.putString("POSE COMANDO", m_desiredRobotoPos.toString());
         m_complete = false;
         pidControllerX.reset();
         pidControllerY.reset();
         pidControllerAngle.reset();
 
-        pidControllerX.setSetpoint(m_desiredRobotoPos.getX());
-        pidControllerY.setSetpoint(m_desiredRobotoPos.getY());
-        pidControllerAngle.setSetpoint(MathUtils.angleConstrain(m_desiredRobotoPos.getRotation().getDegrees()));
-        timer.reset();
-        timer.start();
+       
     }
 
     /*
@@ -95,7 +96,13 @@ public class RobotGotoFieldPos extends Command {
     @Override
     public void execute() {
         Pose2d currentPos = drive.getPose();
-
+        SmartDashboard.putData("X", pidControllerX);
+        SmartDashboard.putData("Y", pidControllerY);
+        SmartDashboard.putData("Angle", pidControllerAngle);
+ pidControllerX.setSetpoint(m_desiredRobotoPos.getX());
+        pidControllerY.setSetpoint(m_desiredRobotoPos.getY());
+        pidControllerAngle.setSetpoint(MathUtils.angleConstrain(m_desiredRobotoPos.getRotation().getDegrees()));
+     
         double xSpeed = pidControllerX.calculate(currentPos.getTranslation().getX());
         double ySpeed = pidControllerY.calculate(currentPos.getTranslation().getY());
         double angleSpeed = pidControllerAngle.calculate(drive.getHeading().getDegrees());
@@ -110,9 +117,7 @@ public class RobotGotoFieldPos extends Command {
         if(pidControllerX.atSetpoint() && pidControllerY.atSetpoint() && pidControllerAngle.atSetpoint()){
             m_complete = true;
         }
-        if(timer.get()>=_timeout){
-            m_complete = true;
-        }
+       
         
     }
 
@@ -127,7 +132,7 @@ public class RobotGotoFieldPos extends Command {
     // When not overridden, this function is blank.
     @Override
     public void end(boolean interrupted) {
-
+        drive.drive(new ChassisSpeeds( ));
     }
 
     /*

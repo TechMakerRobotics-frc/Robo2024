@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClawConstants;
@@ -14,6 +15,7 @@ public class ClawSubsystem extends SubsystemBase {
   private static ClawSubsystem instance;
   DigitalInput sensor = new DigitalInput(ClawConstants.kClawSensor);
   boolean extended = false;
+  PWM motorCleaner = new PWM(ClawConstants.kMotorCleaner);
 
   CANSparkMax  motor = new CANSparkMax(ClawConstants.kClawMotor,MotorType.kBrushless);
   
@@ -35,7 +37,9 @@ public class ClawSubsystem extends SubsystemBase {
     }
     return instance;
 }
-
+public void setCleanerMotor(int pos){
+  motorCleaner.setPosition(pos);
+}
   public void setMotorPower(double inside ) {
     SmartDashboard.putNumber("Claw Potencia (%)", inside * 100.0);
       motor.set(inside);

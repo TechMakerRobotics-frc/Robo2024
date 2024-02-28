@@ -9,6 +9,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.util.Poses;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 //import edu.wpi.first.wpilibj.Filesystem;
@@ -46,6 +47,7 @@ public class RobotContainer {
         private final ClawSubsystem claw = ClawSubsystem.getInstance();
         private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
         private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
+        Poses poses = new Poses();
     CommandXboxController driverController = new CommandXboxController(0);
     CommandXboxController operatorController = new CommandXboxController(1);
     XboxController xbox = new XboxController(0);
@@ -71,9 +73,13 @@ public class RobotContainer {
         driverController.leftBumper().whileTrue(new AlignToSpeaker());
         driverController.rightBumper().whileTrue(new AlignToNote());
         //driverController.x().onTrue(new AlignToAmp());
-        driverController.b().whileTrue(new RobotGotoFieldPos(PosesConstants.atSpeakerMiddle));
-        driverController.a().whileTrue(new RobotGotoFieldPos(PosesConstants.atAmp));
-        driverController.x().whileTrue(new RobotGotoFieldPos(PosesConstants.atSpeakerShooter));
+        driverController.a().onTrue(new RobotGotoFieldPos(poses.changePose(drivebase.getPose(), 1, 0,0)));
+        driverController.x().onTrue(new RobotGotoFieldPos(poses.changePose(drivebase.getPose(), 0, 0, 0)));
+        driverController.y().onTrue(new RobotGotoFieldPos(poses.changePose(drivebase.getPose(), 0, 0, 90)));
+        driverController.b().onTrue(new RobotGotoFieldPos(poses.changePose(drivebase.getPose(), 0, 0, -90)));
+
+        driverController.povDown().onTrue(new InstantCommand(()->claw.setCleanerMotor(90),claw));
+        driverController.povUp().onTrue(new InstantCommand(()->claw.setCleanerMotor(0),claw));
 
 
 

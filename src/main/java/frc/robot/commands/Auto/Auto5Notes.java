@@ -21,7 +21,7 @@ public class Auto5Notes extends SequentialCommandGroup {
     SwerveSubsystem.getInstance().zeroGyro();
     addCommands(
 
-      new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),
+      new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0,-1,0),1),
       new AlignToSpeaker(3),
       new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0.5,0,0),1),
       new AlignToNoteSensor(3),

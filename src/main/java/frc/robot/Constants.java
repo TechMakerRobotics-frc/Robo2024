@@ -58,13 +58,13 @@ public final class Constants {
         public static final double kHeadingP = 0.1;
         public static final double kHeadingI = 0;
         public static final double kHeadingD = 0.001;
-        public static final double kHeadingMaxOutput = 0.5; // Percent
+        public static final double kHeadingMaxOutput = 1; // Percent
         public static final double kHeadingTolerance = 1; // Degrees
     
         public static final double kTranslationP = 5;
         public static final double kTranslationI = 0;
         public static final double kTranslationD = 0;
-        public static final double kTranslationMaxOutput = 0.5; // Percent
+        public static final double kTranslationMaxOutput = 0.8; // Percent
         public static final double kTranslationTolerance = 0.2; // Meters
       }
     public static final class DriveConstants {
@@ -141,6 +141,7 @@ public final class Constants {
         public static final int kClawMotor = 18;
         public static final double kpowerInside = 0.5;
         public static final double kpowerOutside = -0.3;
+        public static final int kMotorCleaner = 0;
     }
 
     public static class PosesConstants{

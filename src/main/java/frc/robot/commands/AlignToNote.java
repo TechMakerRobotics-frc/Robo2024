@@ -61,7 +61,6 @@ public class AlignToNote extends Command {
     
     if (PhotonVisionNote.hasTarget(p)) {
       PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
-      SmartDashboard.putData("PID NOTE",vyNoteController);
       double vo = -PhotonVisionNote.getYaw(t)/ 20;
       double vy = vyNoteController.calculate(PhotonVisionNote.getPitch(t));
       swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy,0, vo, new Rotation2d()));
