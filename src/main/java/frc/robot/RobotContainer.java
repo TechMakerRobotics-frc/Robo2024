@@ -24,7 +24,7 @@ import frc.robot.Constants.PosesConstants;
 //import frc.robot.commands.AlignToAmp;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.Auto5Notes;
+import frc.robot.commands.Auto.Auto4NotesBlue;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -125,7 +125,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new Auto5Notes();
+        return new Auto4NotesBlue();
         //return drivebase.getAutonomousCommand("3 notes blue");
     }
 

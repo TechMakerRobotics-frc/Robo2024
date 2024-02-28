@@ -14,9 +14,9 @@ import frc.robot.commands.swervedrive.RobotGotoFieldPos;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Poses;
 
-public class Auto5Notes extends SequentialCommandGroup {
+public class Auto4NotesBlue extends SequentialCommandGroup {
   Poses poses = new Poses();
-  public Auto5Notes() {
+  public Auto4NotesBlue() {
     SwerveSubsystem.getInstance().resetOdometry(PosesConstants.atSpeakerMiddle);
     SwerveSubsystem.getInstance().zeroGyro();
     addCommands(

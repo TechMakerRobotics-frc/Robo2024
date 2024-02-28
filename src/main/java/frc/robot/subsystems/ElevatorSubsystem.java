@@ -20,8 +20,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   CANSparkMax  motorRight = new CANSparkMax (ElevatorConstants.kElevatorRightMotor,MotorType.kBrushless);
   
   //dois encoders, um de cada motor
- // RelativeEncoder leftEncoder;
-  //RelativeEncoder rightEncoder;
+   RelativeEncoder leftEncoder;
+  RelativeEncoder rightEncoder;
   DigitalInput limiSwitch = new DigitalInput(ElevatorConstants.kLimitSwitch);
   //DigitalInput optical = new DigitalInput(3);
   //AnalogInput distance = new AnalogInput(0);
