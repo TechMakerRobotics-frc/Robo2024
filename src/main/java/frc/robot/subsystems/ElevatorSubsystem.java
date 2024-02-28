@@ -41,10 +41,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     motorRight.setInverted(false);
 
     //Associo os encoders, seto a razão de 1 volta e zero os mesmos
-    //leftEncoder = motorLeft.getEncoder();
-    //rightEncoder = motorRight.getEncoder();
+    leftEncoder = motorLeft.getEncoder();
+    rightEncoder = motorRight.getEncoder();
   
-   // resetEncoder();
+    resetEncoder();
     //setMotorPower(ElevatorConstants.kPowerDown);
     
   }
@@ -64,13 +64,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   //Reseta os valores dos encoders, para ter a referencia atual
   public void resetEncoder(){
-   // leftEncoder.setPosition(0);
-   // rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
   }
   
   //Função  que captura  os encoders, fazendo uma media dos dois lados e dividindo pela redução
-  //public double getEncoder(){
- //   return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));}
+  public double getEncoder(){
+    return (((rightEncoder.getPosition()+leftEncoder.getPosition())/2));}
   public boolean getLimiSwitch(){
     return !limiSwitch.get();
   }
@@ -80,11 +80,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("Elevator Encoder", getEncoder());
 
     SmartDashboard.putBoolean("Elevator LimitSwitch", getLimiSwitch());
-    //if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getLimiSwitch())){
-      //motorRight.set(0);
-      //motorLeft.set(0);
+    if((extending && getEncoder()>ElevatorConstants.kEncoderTicksTop) || (!extending && getEncoder()<10)){
+      motorRight.set(0);
+      motorLeft.set(0);
     }
-    //if(getLimiSwitch()){
-     // resetEncoder();
 }    
    
