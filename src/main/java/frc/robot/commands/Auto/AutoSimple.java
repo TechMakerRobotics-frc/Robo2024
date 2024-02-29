@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants.PosesConstants;
 import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.swervedrive.RobotGotoFieldPos;
 import frc.robot.subsystems.SwerveSubsystem;

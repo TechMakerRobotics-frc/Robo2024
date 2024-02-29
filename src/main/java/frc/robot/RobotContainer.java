@@ -20,8 +20,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PosesConstants;
-//import frc.robot.commands.AlignToAmp;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.Auto.Auto4Notes;
@@ -33,11 +31,9 @@ import frc.robot.commands.Elevator.StopElevator;
 import frc.robot.commands.Elevator.UpElevator;
 import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
-import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.swervedrive.RobotGotoFieldPos;
-import frc.robot.commands.swervedrive.drivebase.PIDTurnToAngle;
 import frc.robot.commands.Shooter.ReverseShooter;
 import frc.robot.commands.Shooter.StartShooter;
 

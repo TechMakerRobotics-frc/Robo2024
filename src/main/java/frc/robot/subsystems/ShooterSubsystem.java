@@ -3,8 +3,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkAbsoluteEncoder;
-import com.revrobotics.SparkRelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +17,6 @@ public class ShooterSubsystem extends SubsystemBase {
   CANSparkMax  motorDown = new CANSparkMax(ShooterConstants.kShooterDownMotor,MotorType.kBrushless);
   CANSparkMax  motorUp = new CANSparkMax (ShooterConstants.kShooterUpMotor,MotorType.kBrushless);
   RelativeEncoder encoder = motorUp.getEncoder();
-  private double motorPower = 0;
   public ShooterSubsystem() {
     
     //Limpo qualquer configuração  inicial dos modulos

@@ -8,22 +8,15 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClawSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.PhotonVisionNote;
 import frc.robot.util.PhotonVisionTags;
 import frc.robot.Constants.AlignConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LimelightConstants;
-import frc.robot.Constants.ShooterConstants;
+
 
 public class AlignToAmp extends Command {
   private static PIDController vyAmpController = new PIDController(AlignConstants.kvyAmpP,AlignConstants.kvyAmpI,AlignConstants.kvyAmpD);
