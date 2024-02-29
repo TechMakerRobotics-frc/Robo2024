@@ -29,6 +29,16 @@ public final class Constants {
         public static final double kiH = 0.000007;
         public static final double kdH = 0;
 
+        public static final int kAuto4Notes = 0;
+        public static final int kAutoSimpleRight = 1;
+        public static final int kAutoSimpleMiddle = 2;
+        public static final int kAutoSimpleLeft = 3;
+        public static final int kAutoLongRight = 4;
+        public static final int kAutoLongLeft = 5;
+        
+        
+        
+
     }
     public static final class AlignConstants {
         public static final double kvyStageP = 0.75;
