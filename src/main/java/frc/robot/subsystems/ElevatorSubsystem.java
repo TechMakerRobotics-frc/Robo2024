@@ -84,5 +84,6 @@ public class ElevatorSubsystem extends SubsystemBase {
       motorRight.set(0);
       motorLeft.set(0);
     }
+  }
 }    
    

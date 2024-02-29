@@ -24,7 +24,7 @@ import frc.robot.Constants.PosesConstants;
 //import frc.robot.commands.AlignToAmp;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
-import frc.robot.commands.Auto.Auto4NotesBlue;
+import frc.robot.commands.Auto.Auto4Notes;
 import frc.robot.commands.Claw.InsideClaw;
 import frc.robot.commands.Claw.OutsideClaw;
 import frc.robot.commands.Claw.StopClaw;
@@ -57,6 +57,7 @@ public class RobotContainer {
     Trigger sensorClaw = new Trigger(() ->claw.getSensor());
     Trigger elevatorSensor = new Trigger(()->elevator.getLimiSwitch());
     Trigger intakeSensor = new Trigger(()->intake.getSensor());
+    Trigger AlertController = new Trigger(() ->intake.alertController());
     public RobotContainer() {
 
         driveFieldOrientedAngularVelocity = drivebase.driveCommand(
@@ -113,6 +114,10 @@ public class RobotContainer {
         twoBumper
                 .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
                 .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
+        
+        AlertController
+                .onTrue(new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 1)))
+                .onFalse((new InstantCommand(() -> xbox.setRumble(RumbleType.kBothRumble, 0))));
 
         sensorClaw.onTrue(new InstantCommand(()-> leds.setRGB(0, 255, 0)))
         .onFalse(new InstantCommand(()->leds.setLedTeamColor()));
@@ -125,7 +130,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new Auto4NotesBlue();
+        return new Auto4Notes();
         //return drivebase.getAutonomousCommand("3 notes blue");
     }
 
