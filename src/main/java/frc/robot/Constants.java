@@ -84,7 +84,7 @@ public final class Constants {
     }
     public static class LimelightConstants{
         public static final int kIDSpeakerBlue = 7;
-        public static final int kIDSpeakerRed = 3;
+        public static final int kIDSpeakerRed = 4;
         public static final int kBlueSpeakerPipeline = 0;
         public static final int kRedSpeakerPipeline = 1;
         public static final int kPosePipeline = 2;
@@ -119,7 +119,7 @@ public final class Constants {
         public static final int kIntakeSensorLeft = 1;
         
         public static final double kRampRate = 0;
-        public static final double kPower = 0.5;
+        public static final double kPower = 0.6;
         public static final double kPowerShoot = 1;
         public static final double kReversePower = -0.3;
 

@@ -19,7 +19,7 @@ public class Auto4Notes extends SequentialCommandGroup {
     SwerveSubsystem.getInstance().zeroGyro();
     if(DriverStation.getAlliance().get()==Alliance.Blue){
       addCommands(
-        new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0,-1,0),1),
+        new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerMiddle,0,-0.3,0),1),
         new AlignToSpeaker(3),
         new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0.5,0,0),1),
         new AlignToNoteSensor(3),
@@ -39,8 +39,8 @@ public class Auto4Notes extends SequentialCommandGroup {
     else if(DriverStation.getAlliance().get()==Alliance.Red){
       addCommands(
 
-      new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0,-1,0),1),
-      new AlignToSpeaker(3),
+      new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerMiddle,0,-0.3,0),1),
+      new AlignToSpeaker(5),
       new RobotGotoFieldPos(poses.changePose(PosesConstants.atSpeakerShooter,0.5,0,0),1),
       new AlignToNoteSensor(3),
       new RobotGotoFieldPos(PosesConstants.atSpeakerShooter,2),

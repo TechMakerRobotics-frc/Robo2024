@@ -12,6 +12,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.units.Time;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.HeadingConstants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -33,7 +35,7 @@ public class RobotGotoFieldPos extends Command {
     private boolean m_complete = false;
 
     private Pose2d m_desiredRobotoPos = null;
-
+    private double timeout = 0;
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
      */
@@ -49,6 +51,8 @@ public class RobotGotoFieldPos extends Command {
         pidControllerAngle.enableContinuousInput(-180, 180);
 
         addRequirements(drive);
+                timeout = Timer.getFPGATimestamp()+20;
+
         
 
     }
@@ -56,17 +60,20 @@ public class RobotGotoFieldPos extends Command {
     public RobotGotoFieldPos(Pose2d desiredRobotoPos, double timeout) {
 
         this(desiredRobotoPos);
-        withTimeout(timeout);
+       this.timeout = Timer.getFPGATimestamp()+timeout;
+        
     }
     /** 
      * Uses PID to make the robot go to a certain postion relative to the field.  
      */
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle) {
         this(new Pose2d(xPosition, yPosition, new Rotation2d(Math.toRadians(angle))));
+                timeout = Timer.getFPGATimestamp()+20;
+
     }
     public RobotGotoFieldPos(double xPosition, double yPosition, double angle,double timeout){
         this(new Pose2d(xPosition, yPosition, new Rotation2d(Math.toRadians(angle))));
-        withTimeout(timeout);
+        this.timeout = Timer.getFPGATimestamp()+timeout;
     }
 
     /*
@@ -99,7 +106,7 @@ public class RobotGotoFieldPos extends Command {
         SmartDashboard.putData("X", pidControllerX);
         SmartDashboard.putData("Y", pidControllerY);
         SmartDashboard.putData("Angle", pidControllerAngle);
- pidControllerX.setSetpoint(m_desiredRobotoPos.getX());
+        pidControllerX.setSetpoint(m_desiredRobotoPos.getX());
         pidControllerY.setSetpoint(m_desiredRobotoPos.getY());
         pidControllerAngle.setSetpoint(MathUtils.angleConstrain(m_desiredRobotoPos.getRotation().getDegrees()));
      
@@ -115,6 +122,9 @@ public class RobotGotoFieldPos extends Command {
         drive.drive(new Translation2d(xSpeed,ySpeed),angleSpeed,true);
         
         if(pidControllerX.atSetpoint() && pidControllerY.atSetpoint() && pidControllerAngle.atSetpoint()){
+            m_complete = true;
+        }
+        if(Timer.getFPGATimestamp()>timeout){
             m_complete = true;
         }
        
