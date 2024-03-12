@@ -18,15 +18,19 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants.AutonomousConstants;
 import java.io.File;
+import java.util.List;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -47,6 +51,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   private final SwerveDrive swerveDrive;
   private static SwerveSubsystem instance;
+  private Field2d m_field = new Field2d();
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
@@ -70,6 +75,7 @@ public class SwerveSubsystem extends SubsystemBase
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
     System.out.println("}");
+    
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
@@ -94,6 +100,23 @@ public class SwerveSubsystem extends SubsystemBase
    * @param driveCfg      SwerveDriveConfiguration for the swerve.
    * @param controllerCfg Swerve Controller.
    */
+
+  public void robotInit() {
+    SmartDashboard.putData("Field", m_field);
+
+    // Criar e enviar trajetória
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0, 0, new Rotation2d(0)),
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        new Pose2d(3, 0, new Rotation2d(0)),
+        new TrajectoryConfig(3.0, 3.0)
+    );
+
+    m_field.getObject("trajectory").setTrajectory(trajectory);
+  }
+
+   
+
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg,DriveConstants.kmaximumSpeed);
@@ -313,9 +336,9 @@ public class SwerveSubsystem extends SubsystemBase
     
    SmartDashboard.putString("Robo Pose", swerveDrive.getPose().toString());
    SmartDashboard.putData(swerveDrive.field);
-
+   m_field.setRobotPose(swerveDrive.getPose());
   }
-
+  
   @Override
   public void simulationPeriodic()
   {
