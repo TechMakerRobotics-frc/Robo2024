@@ -1,7 +1,7 @@
 package frc.robot.subsystems.limelight;
 
-import static frc.robot.Constants.VisionConstants.HIGH_LIMELIGHT_TO_ROBOT;
-import static frc.robot.Constants.VisionConstants.LOW_LIMELIGHT_TO_ROBOT;
+import static frc.robot.Constants.VisionConstants2.HIGH_LIMELIGHT_TO_ROBOT;
+import static frc.robot.Constants.VisionConstants2.LOW_LIMELIGHT_TO_ROBOT;
 
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
