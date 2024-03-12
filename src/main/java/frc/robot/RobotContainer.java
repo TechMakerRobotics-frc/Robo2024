@@ -1,6 +1,10 @@
 
 package frc.robot;
 
+import java.util.Map;
+
+import edu.wpi.first.cscore.HttpCamera;
+
 //import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
@@ -8,9 +12,15 @@ import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.limelight.LimelightCalcs;
+import frc.robot.subsystems.limelight.LimelightProfile;
 import frc.robot.util.Poses;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -23,6 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PosesConstants;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.Constants.VisionConstants2;
 import frc.robot.commands.AlignToNote;
 import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.Auto.Auto4Notes;
@@ -48,7 +60,11 @@ public class RobotContainer {
         private final ClawSubsystem claw = ClawSubsystem.getInstance();
         private final ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
         private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
+        private final PoseEstimatorSubsystem poseEstimator =
+        new PoseEstimatorSubsystem(drivebase::getGyroYaw, drivebase::getModulePositions);
         Poses poses = new Poses();
+        private final LimelightSubsystem lowLimelightSubsystem = new LimelightSubsystem();
+        private final LimelightSubsystem highLimelightSubsystem = new LimelightSubsystem();
         CommandXboxController driverController = new CommandXboxController(0);
         CommandXboxController operatorController = new CommandXboxController(1);
         XboxController xbox = new XboxController(0);
@@ -60,6 +76,7 @@ public class RobotContainer {
         Trigger intakeSensor = new Trigger(() -> intake.getSensor());
         Trigger AlertController = new Trigger(() -> intake.alertController());
         private final SendableChooser<Integer> m_chooser = new SendableChooser<>();
+        private boolean pickingUp = false;
 
         public RobotContainer() {
 
@@ -78,6 +95,33 @@ public class RobotContainer {
 
                 SmartDashboard.putData("Autonomo", m_chooser);
         }
+
+         private void configureDashboard() {
+    /**** Driver tab ****/
+    var driverTab = Shuffleboard.getTab("Driver");
+    driverTab.addBoolean("Pickup", () -> pickingUp).withPosition(11, 3).withSize(2, 2);
+
+    driverTab.add(new HttpCamera("limelight-high", "http://10.90.47.110:5801"))
+        .withWidget(BuiltInWidgets.kCameraStream)
+        .withProperties(Map.of("showCrosshair", true, "showControls", false, "rotation", "QUARTER_CCW"))
+        .withSize(4, 6).withPosition(0, 0);
+
+    /**** Vision tab ****/
+    final var visionTab = Shuffleboard.getTab("Vision");
+
+    // Pose estimation
+    poseEstimator.addDashboardWidgets(visionTab);
+
+    // Top target
+    final var topLimelightCalcs = new LimelightCalcs(
+        LimelightProfile.SCORE_CONE_TOP.cameraToRobot, LimelightProfile.SCORE_CONE_TOP.targetHeight);
+    final var topTargetLayout = visionTab.getLayout("Top Target").withPosition(6, 0).withSize(1, 2);
+
+    final var midTargetLayout = visionTab.getLayout("Mid Target").withPosition(7, 0).withSize(1, 2);
+    
+ 
+   
+  }
 
         // Configura os botões do Xbox.
         void configureBindings() {
