@@ -8,6 +8,7 @@ import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSSubsystem;
+import frc.robot.subsystems.PhotonVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Poses;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,8 +35,8 @@ import frc.robot.commands.Claw.StopClaw;
 import frc.robot.commands.Elevator.DownElevator;
 import frc.robot.commands.Elevator.StopElevator;
 import frc.robot.commands.Elevator.UpElevator;
-import frc.robot.commands.Intake.IntakeSensor;
 import frc.robot.commands.Intake.ReverseIntake;
+import frc.robot.commands.Intake.StartIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.commands.swervedrive.RobotGotoFieldPos;
@@ -75,6 +76,7 @@ public class RobotContainer {
                 m_chooser.addOption("Simples saindo a esquerda", AutonomousConstants.kAutoSimpleLeft);
                 m_chooser.addOption("Longo saindo a direita", AutonomousConstants.kAutoLongRight);
                 m_chooser.addOption("Longo saindo a esquerda", AutonomousConstants.kAutoLongLeft);
+                PhotonVisionSubsystem.updateSmartDashboard();
 
                 SmartDashboard.putData("Autonomo", m_chooser);
         }
@@ -99,7 +101,8 @@ public class RobotContainer {
                                 .onTrue(new StartShooter())
                                 .onFalse(new StopShooter());
 
-                operatorController.y().whileTrue(new IntakeSensor());
+                operatorController.y().onTrue(new StartIntake())
+                .onFalse(new StopIntake());
 
                 operatorController.a()
                                 .onTrue(new ReverseShooter())

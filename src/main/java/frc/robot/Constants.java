@@ -87,7 +87,6 @@ public final class Constants {
         public static final int kIDSpeakerRed = 4;
         public static final int kBlueSpeakerPipeline = 0;
         public static final int kRedSpeakerPipeline = 1;
-        public static final int kPosePipeline = 2;
         public static final double kLimelightHeight = 0.2;
         public static final double kLimelightPanningAngle = 30;
 
@@ -119,7 +118,7 @@ public final class Constants {
         public static final int kIntakeSensorLeft = 1;
         
         public static final double kRampRate = 0;
-        public static final double kPower = 0.6;
+        public static final double kPower = 0.8;
         public static final double kPowerShoot = 1;
         public static final double kReversePower = -0.3;
 

@@ -18,15 +18,20 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants.AutonomousConstants;
 import java.io.File;
+import java.util.List;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -47,6 +52,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   private final SwerveDrive swerveDrive;
   private static SwerveSubsystem instance;
+  private Field2d m_field = new Field2d();
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
@@ -86,6 +92,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
     swerveDrive.getGyro().setInverted(false);
+    
   }
 
   /**
@@ -103,6 +110,19 @@ public class SwerveSubsystem extends SubsystemBase
       instance = new SwerveSubsystem();
     }
     return instance;
+  }
+
+  public void robotInit() {
+    SmartDashboard.putData("Field", m_field);
+
+    Trajectory tajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+      new Pose2d(3, 0, new Rotation2d(0)),
+      new TrajectoryConfig(3.0, 3.0));
+      m_field.getObject("traj").setTrajectory(tajectory);
+
+
   }
   /**
    * Setup AutoBuilder for PathPlanner.
@@ -312,6 +332,7 @@ public class SwerveSubsystem extends SubsystemBase
   {
     
    SmartDashboard.putString("Robo Pose", swerveDrive.getPose().toString());
+   swerveDrive.field.setRobotPose(getPose());
    SmartDashboard.putData(swerveDrive.field);
 
   }

@@ -12,6 +12,7 @@ public class StartIntake extends  InstantCommand {
   @Override
   public void initialize() {
     addRequirements(intake);
+    intake.start();
   }
 
   @Override

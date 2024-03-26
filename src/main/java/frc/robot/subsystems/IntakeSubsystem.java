@@ -21,7 +21,15 @@ public class IntakeSubsystem extends SubsystemBase {
   boolean advised = false;
   public IntakeSubsystem() {
 
-    //Configuro para  que o  motor se mantenha estatico quando em 0
+    start();
+    
+    
+  }
+  
+  public void start(){
+    motor.clearFaults();
+    motor.restoreFactoryDefaults();
+//Configuro para  que o  motor se mantenha estatico quando em 0
     motor.setIdleMode(IdleMode.kCoast);
     
     //Configuro a rampa de aceleração para evitar picos de corrente elétrica
@@ -29,8 +37,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     //Inverto o motor para ele girar de forma correta.
     motor.setInverted(false);
-    
-    
   }
   public static IntakeSubsystem getInstance() {
     if (instance == null) {

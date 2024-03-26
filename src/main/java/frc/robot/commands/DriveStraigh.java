@@ -18,31 +18,28 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.PhotonVisionNote;
 
-public class AlignToNote extends Command {
+public class DriveStraigh extends Command {
 
   private static SwerveSubsystem swerve = SwerveSubsystem.getInstance();
-  private static PIDController vyNoteController = new PIDController(AlignConstants.kvyNoteP,AlignConstants.kvyNoteI,AlignConstants.kvyNoteD);
-  private static IntakeSubsystem intake = IntakeSubsystem.getInstance();
 
   private final Timer timer = new Timer();
   private Command defaultCommand;
   private double _timeout;
+  private boolean rear;
   
-  public AlignToNote(double timeout) {
-    addRequirements(swerve, intake);
+  public DriveStraigh(double timeout, Boolean rear) {
+    addRequirements(swerve);
     _timeout = timeout;
+    this.rear = rear;
   }
-  public AlignToNote() {
-    this(20.0);    
+  public DriveStraigh() {
+    this(20.0, false);    
   }
   @Override
   public void initialize() {
-    vyNoteController.reset();
     timer.reset();
     timer.start();
-    defaultCommand = swerve.getDefaultCommand();
-    swerve.removeDefaultCommand();
-    vyNoteController.setSetpoint(AlignConstants.kMaxPitch);
+
     
   }
 
@@ -52,13 +49,8 @@ public class AlignToNote extends Command {
     PhotonPipelineResult p = PhotonVisionNote.getLatestPipeline();
     
     if (PhotonVisionNote.hasTarget(p)) {
-      PhotonTrackedTarget t = PhotonVisionNote.getBestTarget(p);
-      double vo = -PhotonVisionNote.getYaw(t)/ 20;
-      double vy = vyNoteController.calculate(PhotonVisionNote.getPitch(t));
-      swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy,0, vo, new Rotation2d()));
-     
-      
-
+      double vy = (rear?-2:2);      
+      swerve.drive(ChassisSpeeds.fromRobotRelativeSpeeds(vy,0, 0, new Rotation2d()));
     }
   }
 
@@ -70,6 +62,5 @@ public class AlignToNote extends Command {
   @Override
   public void end(boolean interrupted) {
     swerve.drive(new ChassisSpeeds());
-    swerve.setDefaultCommand(defaultCommand);
   }
 }

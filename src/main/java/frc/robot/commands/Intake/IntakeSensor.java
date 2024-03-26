@@ -19,6 +19,8 @@ public class IntakeSensor extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+        intake.start();
+
     intake.setMotorPower(IntakeConstants.kPower);
   }
 

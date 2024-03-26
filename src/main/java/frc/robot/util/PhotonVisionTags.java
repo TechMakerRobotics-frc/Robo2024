@@ -3,11 +3,17 @@ package frc.robot.util;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 //import edu.wpi.first.networktables.NetworkTable;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,16 +23,23 @@ public class PhotonVisionTags{
     //private NetworkTableInstance instance = NetworkTableInstance.getDefault();
     //private NetworkTable table = instance.getTable("photonvision");
 
-    static PhotonCamera  camera = new PhotonCamera("Apriltags");
+    static PhotonCamera  limelight = new PhotonCamera("limelight");
+    AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
+    Transform3d robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0));
+    
+    PhotonPoseEstimator photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, limelight, robotToCam);
+    
+    
+    
     // Have to use the same pipeline result each time you want to gather data.
     
     // Gets the processed data from the camera
     public static PhotonPipelineResult getLatestPipeline() {
-        return camera.getLatestResult();
+        return limelight.getLatestResult();
     }
     public static PhotonCamera getCamera(){
-        return camera;
+        return limelight;
     }
 
     // Checks if there is a target in vision

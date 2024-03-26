@@ -19,6 +19,7 @@ public class StartShooter extends SequentialCommandGroup {
   public StartShooter() {
 
     addCommands(
+      new InstantCommand(()->intake.start(),intake),
       new InstantCommand(()->shooter.setMotorPower(ShooterConstants.kPower),shooter),
       new WaitCommand(ShooterConstants.kWaitBeforeShoot),
       new InstantCommand(()->intake.setMotorPower(IntakeConstants.kPowerShoot),intake)
